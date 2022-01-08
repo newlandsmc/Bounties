@@ -1,0 +1,38 @@
+########################################################################################################################
+#                                                          BountyOnHead
+#                                                       Author: Alen_Alex
+#                                             Developed For: sudoyou , SemiVanillaMC
+########################################################################################################################
+#Things To Note:
+#The entire plugin supports kyori's adventure MiniMessage
+#https://docs.adventure.kyori.net/minimessage
+########################################################################################################################
+
+##Prefix of the plugin
+##You can leave it blank if you don't wish to set one
+prefix: "<color:#0488D0>Bounty<color:#FAFAD2>On<color:#CBB7FF>Head <color:#EAE9E9>» "
+
+##Duration of a bounty in sec. How long does a bounty stay on a player
+bounty-duration-in-sec:
+
+##List of rewards that can be executed once a player has killed a bounty
+##You can categorize rewards based on permission. The permission node for rewards is boh.reward.level
+##So for example the player with reward boh.reward.10 will execute the 10 level reward
+##0 is the default Level it would be applicable to anyone
+##max-ranks: Set it to a reasonable level. The plugin will check 0 to this level. Reducing this will have a lower loop
+#currently available options:
+# [XP]:amount -> Gives player definite amount of XP
+# [CONSOLE]:command -> Execute commands from console
+# [PLAYER]:command -> Execute command as a player
+# [MESSAGE]:message -> Send a message to the player who killed the bounty
+# [XPLVL]:amount -> Gives player the specified levels worth of XP
+rewards:
+  max-rank: 10
+  level:
+    "0":
+      - "[XP]:500"
+    "10":
+      - "[XP]:2500"
+      - "[CONSOLE]:tps"
+      - "[MESSAGE]:<yellow>Woo: <gradient:green:blue>||||||||||||||||||||||||</gradient>!"
+      - "[MESSAGE]:&cHello"

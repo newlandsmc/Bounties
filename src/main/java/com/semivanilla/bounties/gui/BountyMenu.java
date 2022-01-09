@@ -22,21 +22,20 @@ public class BountyMenu {
         this.plugin = plugin;
         this.paginatedGui = Gui
                 .paginated()
-                .title(Component.text("§cBounties"))
-                .rows(6)
-                .pageSize(45)
+                .title(MiniMessageUtils.transform(plugin.getConfiguration().getGUIName()))
+                .rows(plugin.getConfiguration().getGuiSize()+1)
                 .disableAllInteractions()
                 .create();
 
-        paginatedGui.setItem(6,1,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(6,2,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(6, 3, ItemBuilder.from(Material.HOPPER).name(MiniMessageUtils.transform("<color:#FFE400>« Previous")).asGuiItem(event -> paginatedGui.previous()));
-        paginatedGui.setItem(6,4,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(6,5,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(6,6,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(6, 7, ItemBuilder.from(Material.HOPPER).name(MiniMessageUtils.transform("<color:#FFE400>» Next")).asGuiItem(event -> paginatedGui.next()));
-        paginatedGui.setItem(6,8,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(6,9,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 1,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,2,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 3, ItemBuilder.from(Material.HOPPER).name(MiniMessageUtils.transform(plugin.getConfiguration().getPreviousName())).asGuiItem(event -> paginatedGui.previous()));
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,4,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,5,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,6,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 7, ItemBuilder.from(Material.HOPPER).name(MiniMessageUtils.transform(plugin.getConfiguration().getNextName())).asGuiItem(event -> paginatedGui.next()));
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,8,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,9,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
     }
 
     public void openMenu(Player player){
@@ -60,9 +59,9 @@ public class BountyMenu {
                     final GuiItem item = ItemBuilder
                             .skull()
                             .owner(b.getPlayer())
-                            .name(MiniMessageUtils.transform("<color:#00FFF0>"+b.getPlayerName()))
-                            .lore(MiniMessageUtils.transform("<color:#00FFF0>Time left <color:#A9A7A2>» "+b.getFormattedRemainingTime()),
-                                    MiniMessageUtils.transform("<color:#00FFF0>Current Kills <color:#A9A7A2>» "+b.getCurrentKills()))
+                            .name(MiniMessageUtils.transform(
+                                    plugin.getConfiguration().getNamePlaceholder().replace("%player%",b.getPlayerName())))
+                            .lore(MiniMessageUtils.transform(plugin.getConfiguration().getLorePlaceholder(b.getCurrentKills(),b.getFormattedRemainingTime())))
                             .asGuiItem(event -> {
                                if(player.hasPermission("bounty.admin")){
                                    player.teleport(b.getPlayer().getLocation());

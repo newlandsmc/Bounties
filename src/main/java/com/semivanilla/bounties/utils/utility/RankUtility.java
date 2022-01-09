@@ -14,19 +14,22 @@ public class RankUtility {
         this.manager = manager;
     }
 
-    public Optional<RewardRank> matchPlayerRank(Player player){
+    /*public Optional<RewardRank> matchPlayerRank(Player player){
         RewardRank rank = null;
         for(int i = manager.getJavaPlugin().getConfiguration().getMaxRewardToSearch(); i >= 1; i--){
             if(player.hasPermission("boh.reward."+i)){
-                System.out.println("Player has permission "+i);
                 if(manager.getJavaPlugin().getConfiguration().getRewardMap().containsKey(i)) {
-                    System.out.println("Also contains key");
                     rank = manager.getJavaPlugin().getConfiguration().getRewardMap().get(i);
                     break;
                 }
             }
         }
+
+        if(rank == null)
+            rank = manager.getJavaPlugin().getConfiguration().getRewardMap().get(0);
+
         return Optional.ofNullable(rank);
-    }
+    }*/
 
 }
+

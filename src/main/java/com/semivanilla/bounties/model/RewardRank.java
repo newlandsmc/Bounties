@@ -1,6 +1,7 @@
 package com.semivanilla.bounties.model;
 
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,7 @@ public class RewardRank {
         return rankLevel;
     }
 
-    public void executeFor(@NotNull Player player, @NotNull Player killed){
+    public void executeFor(@NotNull Player player, @NotNull Player dead){
         rewardsToProcess.forEach((reward) -> {
             final String[] rewardArgs = reward.split(":");
             if(rewardArgs.length > 1) {
@@ -34,16 +35,32 @@ public class RewardRank {
                         giveXPLevel(player, Integer.parseInt(rewardArgs[1]));
                         break;
                     case "[MESSAGE]":
-                        final String message = reward.substring(("[MESSAGE]:").length());
+                        final String message = reward.substring(("[MESSAGE]:").length())
+                                .replaceAll("%dead-bounty%",player.getName())
+                                .replaceAll("%killer%",dead.getName())
+                                ;
                         sendMessage(player, message);
                         break;
                     case "[CONSOLE]":
-                        final String consoleCommand = reward.substring(("[CONSOLE]:").length());
+                        final String consoleCommand = reward.substring(("[CONSOLE]:").length())
+                                .replaceAll("%dead-bounty%",player.getName())
+                                .replaceAll("%killer%",dead.getName())
+                                ;
                         executeCommand(consoleCommand);
                         break;
                     case "[PLAYER]":
-                        final String command = reward.substring(("[PLAYER]:").length());
+                        final String command = reward.substring(("[PLAYER]:").length())
+                                .replaceAll("%dead-bounty%",player.getName())
+                                .replaceAll("%killer%",dead.getName())
+                                ;
                         executeCommand(player,command);
+                        break;
+                    case "[BROADCAST]":
+                        final String broadcastMessage = reward.substring(("[BROADCAST]:").length())
+                                .replaceAll("%dead-bounty%",player.getName())
+                                .replaceAll("%killer%",dead.getName())
+                                ;
+                        broadcastMessage(broadcastMessage);
                         break;
                     default:
                 }
@@ -69,6 +86,12 @@ public class RewardRank {
 
     private void giveXPLevel(@NotNull Player player, int xpLevel){
         player.giveExpLevels(xpLevel);
+    }
+
+    private void broadcastMessage( String message){
+        if(StringUtils.isBlank(message))
+            return;
+        MiniMessageUtils.broadcast(message);
     }
 
     public List<String> getRewardsToProcess() {

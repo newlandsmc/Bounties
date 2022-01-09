@@ -9,8 +9,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.markdown.DiscordFlavor;
 import net.kyori.adventure.text.minimessage.markdown.GithubFlavor;
 import net.kyori.adventure.text.minimessage.transformation.TransformationType;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -41,11 +43,9 @@ public class MiniMessageUtils {
                 .transformation(TransformationType.GRADIENT)
                 .transformation(TransformationType.CLICK_EVENT)
                 .transformation(TransformationType.COLOR)
-                .transformation(TransformationType.DECORATION)
                 .transformation(TransformationType.INSERTION)
                 .transformation(TransformationType.PRE)
                 .transformation(TransformationType.TRANSLATABLE)
-                .markdown()
                 .markdownFlavor(DiscordFlavor.get())
                 .markdownFlavor(GithubFlavor.get())
                 .build();
@@ -68,7 +68,7 @@ public class MiniMessageUtils {
     public static Component transform(String message){
         if(StringUtils.isBlank(message))
             return Component.empty();
-
+        final String legacyConversion = ChatColor.translateAlternateColorCodes('&',message);
         return miniMessage.parse(message);
     }
 
@@ -116,7 +116,10 @@ public class MiniMessageUtils {
     }
 
     public static void sendSimpleMessage(@NotNull Player player, String message){
-        audiences.player(player).sendMessage(transform(PlaceholderAPI.setPlaceholders(player,message)));
+        if(manager.getJavaPlugin().getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
+            audiences.player(player).sendMessage(transform(PlaceholderAPI.setPlaceholders(player,message)));
+        else audiences.player(player).sendMessage(transform(message));
+
     }
 
     public static void sendMessage(@NotNull Player player, List<String> messages){
@@ -201,4 +204,11 @@ public class MiniMessageUtils {
 
         audiences.player(player).showTitle(title);
     }
+
+    public static void broadcast(String message){
+        if(StringUtils.isBlank(message))
+            return;
+       audiences.all().sendMessage(transform(message));
+    }
+
 }

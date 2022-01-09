@@ -1,5 +1,6 @@
-package com.semivanilla.bounties;
+package com.semivanilla.bounties.manager;
 
+import com.semivanilla.bounties.Bounties;
 import com.semivanilla.bounties.model.Bounty;
 import com.semivanilla.bounties.utils.utility.LocationUtils;
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
@@ -13,10 +14,12 @@ public class DataManager {
     private final Bounties plugin;
     private final HashMap<UUID, Bounty> activeBountyPlayer;
     private final List<String> exemptFromBounty;
+    private final HashMap<UUID, Integer> playerBountyKills;
 
     public DataManager(Bounties plugin) {
         this.plugin = plugin;
         this.activeBountyPlayer = new HashMap<>();
+        this.playerBountyKills = new HashMap<>();
         this.exemptFromBounty = new ArrayList<String>();
     }
 
@@ -28,8 +31,13 @@ public class DataManager {
         return activeBountyPlayer.containsKey(uuid);
     }
 
-    public void createBountyForPlayer(Player killer,Player deadPlayer){
+    public void createBountyForPlayer(Player killer){
         final Bounty bounty = new Bounty(killer,(System.currentTimeMillis()+plugin.getConfiguration().durationInMillis())).markPlayerAsBounty();
+        plugin.getCache().insertCache(bounty);
+        activeBountyPlayer.put(killer.getUniqueId(),bounty);
+    }
+    public void createBountyForPlayer(Player killer,long duration){
+        final Bounty bounty = new Bounty(killer,(System.currentTimeMillis()+duration)).markPlayerAsBounty();
         plugin.getCache().insertCache(bounty);
         activeBountyPlayer.put(killer.getUniqueId(),bounty);
     }
@@ -99,5 +107,43 @@ public class DataManager {
 
     public HashMap<UUID, Bounty> getActiveBountyPlayer() {
         return activeBountyPlayer;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Methods for playerBountyKills Storage
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void loadBountyKillsFor(@NotNull UUID uuid){
+        if(plugin.getDataStorage().containsStorageForPlayer(uuid)){
+            this.playerBountyKills.put(uuid,plugin.getDataStorage().getPlayerData(uuid));
+        }else {
+            plugin.getDataStorage().insertPlayerData(uuid);
+            this.playerBountyKills.put(uuid,plugin.getDataStorage().getPlayerData(uuid));
+        }
+    }
+
+    public void saveBountyKillsOf(@NotNull UUID uuid){
+        plugin.getDataStorage().setPlayerKill(uuid,playerBountyKills.get(uuid));
+    }
+
+    public int getBountyKillsOf(@NotNull UUID uuid){
+        return playerBountyKills.get(uuid);
+    }
+
+    public void setBountyKills(@NotNull UUID uuid, int kills){
+        playerBountyKills.put(uuid,kills);
+        saveBountyKillsOf(uuid);
+    }
+
+    public void unloadBountyKillsFor(@NotNull UUID uuid){
+        playerBountyKills.remove(uuid);
+    }
+
+    public void addBountyPlayerKill(@NotNull UUID uuid){
+        this.playerBountyKills.put(uuid,this.playerBountyKills.get  (uuid)+1);
+        plugin.getDataStorage().addBountyKill(uuid);
+    }
+
+    public HashMap<UUID, Integer> getPlayerBountyKills() {
+        return playerBountyKills;
     }
 }

@@ -1,4 +1,4 @@
-package com.semivanilla.bounties.cache;
+package com.semivanilla.bounties.data.cache;
 
 import com.semivanilla.bounties.Bounties;
 import com.semivanilla.bounties.model.Bounty;
@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 
-public class JSONCache implements CacheImpl {
+public class JsonCache implements CacheImpl {
 
     private final Bounties plugin;
     private Json cache;
 
-    public JSONCache(Bounties plugin) {
+    public JsonCache(Bounties plugin) {
         this.plugin = plugin;
     }
 
@@ -26,8 +26,14 @@ public class JSONCache implements CacheImpl {
     }
 
     @Override
-    public boolean containsPlayer(@NotNull UUID playerID) {
-        return cache.contains(playerID.toString());
+    public boolean containsCacheForPlayer(@NotNull UUID playerID) {
+        final long currentTime = System.currentTimeMillis();
+        if(cache.contains(playerID.toString())){
+            if(currentTime >= cache.getLong(playerID.toString()+".remaining")) {
+                this.removeCache(playerID);
+                return false;
+            } else return true;
+        } else return false;
     }
 
     @Override
@@ -47,13 +53,12 @@ public class JSONCache implements CacheImpl {
         if(player == null)
             return Optional.empty();
         final Bounty bounty = Bounty.buildFrom(player, new FlatFileSection(this.cache,uuid.toString()));
-        System.out.println("getBounty JSON CAche "+bounty.getPlayer().getName());
         return Optional.of(bounty);
     }
 
     @Override
     public void updateBounty(@NotNull Bounty bounty) {
-        if(!containsPlayer(bounty.getPlayerUUID()))
+        if(!containsCacheForPlayer(bounty.getPlayerUUID()))
             insertCache(bounty);
         else {
             cache.remove(bounty.getPlayerUUID().toString());

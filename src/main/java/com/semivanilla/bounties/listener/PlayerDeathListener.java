@@ -37,16 +37,18 @@ public class PlayerDeathListener implements Listener {
         if(plugin.getDataManager().isPlayerExemptedFromBounty(killer.getName()) || plugin.getDataManager().isPlayerExemptedFromBounty(deadPlayer.getName()))
             return;
 
+        if(killer.hasPermission("bounty.bypass") || deadPlayer.hasPermission("bounty.bypass"))
+            return;
 
         if(plugin.getDataManager().isPlayerBounty(deadPlayer)) {
             Bounty bounty = plugin.getDataManager().getPlayerBounty(deadPlayer.getUniqueId());
+            plugin.getDataManager().addBountyPlayerKill(killer.getUniqueId());
             RewardRank rank = null;
             if(plugin.getConfiguration().getRewardMap().containsKey(bounty.getCurrentKills())){
                 rank = plugin.getConfiguration().getRewardMap().get(bounty.getCurrentKills());
             }else {
                 try {
                     final int closestMatch = plugin.getConfiguration().getSortedRewardList().lower(bounty.getCurrentKills());
-                    System.out.println(closestMatch);
                     rank = plugin.getConfiguration().getRewardMap().get(closestMatch);
                 }catch (Exception e){
                     plugin.getLogger().info("The plugin is unable to determine a closer kill reward for "+bounty.getCurrentKills()+" kills");
@@ -58,13 +60,13 @@ public class PlayerDeathListener implements Listener {
                 plugin.getDataManager().clearBountyForPlayer(deadPlayer.getUniqueId());
                 plugin.getConfiguration().getBountyClear().forEach((s) -> {
                     MiniMessageUtils.broadcast(s
-                            .replaceAll("%player%", deadPlayer.getName()
-                                    .replaceAll("%player_kills%", String.valueOf(bounty.getCurrentKills()))
-                                    .replaceAll("%player-x%", String.valueOf(deadPlayer.getLocation().getX()))
-                                    .replaceAll("%player-y%", String.valueOf(deadPlayer.getLocation().getY()))
-                                    .replaceAll("%player-z%", String.valueOf(deadPlayer.getLocation().getZ()))
-                                    .replaceAll("%killer% ", killer.getName())
-                            ));
+                            .replace("%dead_player%", deadPlayer.getName())
+                                    .replace("%killer%", killer.getName())
+                                    .replace("%player_kills%", String.valueOf(bounty.getCurrentKills()))
+                                    .replace("%player_x%", String.valueOf(deadPlayer.getLocation().getX()))
+                                    .replace("%player_y%", String.valueOf(deadPlayer.getLocation().getY()))
+                                    .replace("%player_z%", String.valueOf(deadPlayer.getLocation().getZ()))
+                            );
                 });
             }
             deadPlayerWasBounty = true;
@@ -77,12 +79,12 @@ public class PlayerDeathListener implements Listener {
                 return;
             }
 
-            plugin.getDataManager().createBountyForPlayer(killer,deadPlayer);
+            plugin.getDataManager().createBountyForPlayer(killer);
             plugin.getConfiguration().getNewBountyBroadcast().forEach((b) -> {
                     MiniMessageUtils.broadcast(b
-                            .replaceAll("%killer%", killer.getName())
-                            .replaceAll("%rand-loc%", LocationUtils.getRandomLocationFromARadius(killer.getLocation(), 50))
-                            .replaceAll("%dead-player%", deadPlayer.getName()));
+                            .replace("%killer%", killer.getName())
+                            .replace("%rand_loc%", LocationUtils.getRandomLocationFromARadius(killer.getLocation(), 50))
+                            .replace("%dead_player%", deadPlayer.getName()));
             });
         }
 

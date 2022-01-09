@@ -45,24 +45,13 @@ public class Configuration {
             rewardMap.put(Integer.parseInt(kills), new RewardRank(Integer.parseInt(kills), config.getStringList("rewards.level."+kills)));
         });
         sortedRewardList = new TreeSet<>(rewardMap.keySet().stream().sorted().toList());
-        System.out.println(sortedRewardList);
 
         this.newBountyBroadcast = config.getStringList("messages.new-bounty-broadcast");
         this.bountyClear = config.getStringList("messages.player-bounty-released-broadcast");
         this.existingBountyMessage = config.getStringList("messages.existing-bounty-broadcast");
     }
 
-    public boolean validateConfigurationOptions(){
-        plugin.getLogger().info("############################################");
-        plugin.getLogger().info(" -> Validating Configs");
-        if(!config.contains("levels.messages.default")){
-            config.getOrDefault("levels.messages.default","&c%player% &bfreached %level%");
-            plugin.getLogger().warning("The default message for rank level should not be removed. If you wish not to have a message, you can simple leave it blank");
-        }
-        plugin.getLogger().info("The configuration is valid");
-        plugin.getLogger().info("############################################");
-        return true;
-    }
+
 
     public String getPluginPrefix() {
         return pluginPrefix;

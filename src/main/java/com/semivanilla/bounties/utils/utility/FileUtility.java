@@ -47,7 +47,7 @@ public class FileUtility {
     }
 
     public Json createJson(@NotNull String fileName){
-        return new Json(fileName,manager.getJavaPlugin().getDataFolder().getPath());
+        return new Json(fileName,manager.getJavaPlugin().getDataFolder().getPath()+ File.separator+"data-storage");
     }
 
     public void executeAsyncIfExists(@NotNull String fileName, Consumer<File> toPerform){

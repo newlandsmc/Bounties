@@ -45,28 +45,28 @@ rewards:
 #message has been sent. Not the killer or Dead Player. This is done to make consistency in the plugin messaging
 messages:
   #Available Placeholders:
-  #%dead-player% -> Name of the dead player
+  #%dead_player% -> Name of the dead player
   #%killer% -> Name of the killer
-  #%rand-loc% -> A random location of radius 50 of the bounty player
+  #%rand_loc% -> A random location of radius 50 of the bounty player
   new-bounty-broadcast:
-    - <color:#E81010>%dead-player% was slained by %killer%
-    - <color:#E81010>%killer% now has a bounty on their head!
+    - "<red>%dead_player%'s was slain by %killer%"
+    - "<red>%killer% now has a bounty on their head!"
   #Available Placeholders:
-  #%dead-player% -> Name of the dead player
+  #%dead_player% -> Name of the dead player
   #%killer% -> Name of the killer
-  #%rand-loc% -> A random location of radius 50 of the bounty player
+  #%rand_loc% -> A random location of radius 50 of the bounty player
   #%kills% -> Gets no of kills the killer player have
   existing-bounty-broadcast:
-    - <color:#E81010>%dead-player% was slained by %killer%
-    - <color:#E81010>%killer%'s bounty grows...
+    - "<red>%dead_player% was slain by %killer%"
+    - "<red>%killer%'s bounty grows..."
   #Available Placeholders:
-  #%player% -> Name of the dead player who has bounty
-  #%player-x% -> X Location X of the dead bounty
-  #%player-y% -> Y Location Y of the dead bounty
-  #%player-z% -> Y Location Z of the dead bounty
-  #%killer% -> Player who killed the bounty
+  #%dead_player% -> Name of the dead player
+  #%player_x% -> X Location X of the dead bounty
+  #%player_y% -> Y Location Y of the dead bounty
+  #%player_z% -> Y Location Z of the dead bounty
+  #%killer% -> Name of the killer
   #%player_kills% -> The consecutive kills bounty had
   #%player_level% -> The current reward level the player had
   player-bounty-released-broadcast:
-    - "<color:#BCBCBC>%player%'s bounty has been claimed by %killer%"
+    - "<gray>%dead_player%'s bounty has been claimed by %killer%"
 version: 1.0

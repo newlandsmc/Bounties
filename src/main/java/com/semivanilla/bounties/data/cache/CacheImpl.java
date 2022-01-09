@@ -1,4 +1,4 @@
-package com.semivanilla.bounties.cache;
+package com.semivanilla.bounties.data.cache;
 
 import com.semivanilla.bounties.model.Bounty;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ public interface CacheImpl {
 
     boolean initCacheSystem();
 
-    boolean containsPlayer(@NotNull UUID playerID);
+    boolean containsCacheForPlayer(@NotNull UUID playerID);
 
     void insertCache(@NotNull Bounty bounty);
 
@@ -25,6 +25,8 @@ public interface CacheImpl {
     Optional<Bounty> getBounty(@NotNull UUID uuid);
 
     void updateBounty(@NotNull Bounty bounty);
+
+
 
     void stop();
 }

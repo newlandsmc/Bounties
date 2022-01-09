@@ -20,14 +20,14 @@ public class PlayerConnectionListener implements Listener {
         final Player player = event.getPlayer();
 
         if(plugin.getDataManager().isPlayerBounty(player)) {
-            System.out.println("Is in internal cache");
             return;
         }
 
-        if(plugin.getCache().containsPlayer(player.getUniqueId())) {
+        if(plugin.getCache().containsCacheForPlayer(player.getUniqueId())) {
             plugin.getDataManager().loadBountyFromExternalCache(player);
-            System.out.println("Loading from external cache");
         }
+
+        plugin.getDataManager().loadBountyKillsFor(player.getUniqueId());
     }
 
     @EventHandler
@@ -35,10 +35,12 @@ public class PlayerConnectionListener implements Listener {
         final Player player = event.getPlayer();
         if(plugin.getDataManager().isPlayerBounty(player)){
             plugin.getCache().updateBounty(plugin.getDataManager().getPlayerBounty(player.getUniqueId()));
+            plugin.getDataManager().saveBountyKillsOf(player.getUniqueId());
             plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
                     plugin.getDataManager().unloadFromCache(player.getUniqueId());
+                    plugin.getDataManager().unloadBountyKillsFor(player.getUniqueId());
                 }
             },20*30); //A small cache measure for some quick player reconnects
         }

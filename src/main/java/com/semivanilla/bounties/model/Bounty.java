@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class Bounty {
 
@@ -40,7 +41,20 @@ public class Bounty {
     }
 
     public String getFormattedRemainingTime(){
-        return DateFormat.getDateTimeInstance().format(new Date(this.time-System.currentTimeMillis()));
+        String returnTime = "0";
+        final long remainingTime = this.time - System.currentTimeMillis();
+        final int hr = (int) TimeUnit.MILLISECONDS.toHours(remainingTime);
+
+        if(hr >= 1){
+            returnTime = hr+" Hours ";
+        }else {
+            final int mins = (int) TimeUnit.MILLISECONDS.toMinutes(remainingTime);
+            if(mins > 1)
+                returnTime = mins+" Minutes";
+            else return "Less than a minute";
+        }
+
+        return returnTime;
     }
 
     public UUID getPlayerUUID(){
@@ -75,5 +89,9 @@ public class Bounty {
 
     public static Bounty buildFrom(@NotNull Player player, FlatFileSection section){
         return new Bounty(player,section.getLong("remaining"),section.getInt("kills"));
+    }
+
+    public String getPlayerName(){
+        return this.player.getName();
     }
 }

@@ -6,10 +6,8 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.markdown.DiscordFlavor;
-import net.kyori.adventure.text.minimessage.markdown.GithubFlavor;
+import net.kyori.adventure.text.minimessage.transformation.TransformationRegistry;
 import net.kyori.adventure.text.minimessage.transformation.TransformationType;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -35,19 +33,19 @@ public class MiniMessageUtils {
         manager = utilityManager;
         audiences = BukkitAudiences.create(manager.getJavaPlugin());
         miniMessage = MiniMessage.builder()
-                .removeDefaultTransformations()
-                .transformation(TransformationType.RESET)
-                .transformation(TransformationType.HOVER_EVENT)
-                .transformation(TransformationType.RAINBOW)
-                .transformation(TransformationType.FONT)
-                .transformation(TransformationType.GRADIENT)
-                .transformation(TransformationType.CLICK_EVENT)
-                .transformation(TransformationType.COLOR)
-                .transformation(TransformationType.INSERTION)
-                .transformation(TransformationType.PRE)
-                .transformation(TransformationType.TRANSLATABLE)
-                .markdownFlavor(DiscordFlavor.get())
-                .markdownFlavor(GithubFlavor.get())
+                .transformations(TransformationRegistry.builder()
+                        .add(TransformationType.COLOR)
+                        .add(TransformationType.DECORATION)
+                        .add(TransformationType.HOVER_EVENT)
+                        .add(TransformationType.CLICK_EVENT)
+                        .add(TransformationType.KEYBIND)
+                        .add(TransformationType.TRANSLATABLE)
+                        .add(TransformationType.INSERTION)
+                        .add(TransformationType.FONT)
+                        .add(TransformationType.GRADIENT)
+                        .add(TransformationType.RAINBOW)
+                        .build())
+                .strict(false)
                 .build();
 
         prefix = "";
@@ -175,7 +173,7 @@ public class MiniMessageUtils {
     }
 
     public static void sendTitle(@NotNull Player player, String header, String footer, long fadeIn, long stay, long fadeOut){
-        final Title.Times timeObj = Title.Times.of(Duration.ofSeconds(fadeIn),Duration.ofSeconds(stay),Duration.ofSeconds(fadeOut));
+        final Title.Times timeObj = Title.Times.times(Duration.ofSeconds(fadeIn),Duration.ofSeconds(stay),Duration.ofSeconds(fadeOut));
         final Title title = Title.title(
                 transform(header)
                 ,transform(footer)
@@ -195,7 +193,7 @@ public class MiniMessageUtils {
     }
 
     public static void sendTitle(@NotNull Player player, String header, long fadeIn, long stay, long fadeOut){
-        final Title.Times timeObj = Title.Times.of(Duration.ofSeconds(fadeIn),Duration.ofSeconds(stay),Duration.ofSeconds(fadeOut));
+        final Title.Times timeObj = Title.Times.times(Duration.ofSeconds(fadeIn),Duration.ofSeconds(stay),Duration.ofSeconds(fadeOut));
         final Title title = Title.title(
                 transform(header)
                 ,Component.empty()

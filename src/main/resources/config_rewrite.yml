@@ -47,15 +47,11 @@ messages:
   #Available Placeholders:
   #%dead-player% -> Name of the dead player
   #%killer% -> Name of the killer
-  #%rand-loc% -> A random location of radius 50 of the bounty player
+  #%%rand-loc%% -> A random location of radius 50 of the bounty player
   new-bounty-broadcast:
     - <color:#E81010>%dead-player% was slained by %killer%
     - <color:#E81010>%killer% now has a bounty on their head!
-  #Available Placeholders:
-  #%dead-player% -> Name of the dead player
-  #%killer% -> Name of the killer
-  #%rand-loc% -> A random location of radius 50 of the bounty player
-  #%kills% -> Gets no of kills the killer player have
+  #Use this message instead of new-bounty-broadcast if killer already has a bounty
   existing-bounty-broadcast:
     - <color:#E81010>%dead-player% was slained by %killer%
     - <color:#E81010>%killer%'s bounty grows...
@@ -68,5 +64,5 @@ messages:
   #%player_kills% -> The consecutive kills bounty had
   #%player_level% -> The current reward level the player had
   player-bounty-released-broadcast:
-    - "<color:#BCBCBC>%player%'s bounty has been claimed by %killer%"
+    - <color:#BCBCBC>%player%'s bounty has been claimed by %player%
 version: 1.0

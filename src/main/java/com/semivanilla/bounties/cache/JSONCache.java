@@ -37,7 +37,8 @@ public class JSONCache implements CacheImpl {
 
     @Override
     public void removeCache(@NotNull UUID uuid) {
-        cache.remove(uuid.toString());
+        if(cache.contains(uuid.toString()))
+            cache.remove(uuid.toString());
     }
 
     @Override

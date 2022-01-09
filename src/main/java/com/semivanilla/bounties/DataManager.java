@@ -1,6 +1,7 @@
 package com.semivanilla.bounties;
 
 import com.semivanilla.bounties.model.Bounty;
+import com.semivanilla.bounties.utils.utility.LocationUtils;
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,6 @@ public class DataManager {
     }
 
     public void createBountyForPlayer(Player killer,Player deadPlayer){
-        System.out.println("Creating bounty for player");
         final Bounty bounty = new Bounty(killer,(System.currentTimeMillis()+plugin.getConfiguration().durationInMillis())).markPlayerAsBounty();
         plugin.getCache().insertCache(bounty);
         activeBountyPlayer.put(killer.getUniqueId(),bounty);
@@ -43,7 +43,6 @@ public class DataManager {
         bounty.unmarkAsBounty();
         activeBountyPlayer.remove(player);
         plugin.getCache().removeCache(player);
-
     }
 
     public Bounty getPlayerBounty(@NotNull UUID player){
@@ -58,29 +57,18 @@ public class DataManager {
         activeBountyPlayer.remove(uuid);
     }
 
-    public void addNewKill(@NotNull Player player){
-
+    public void addNewKill(@NotNull Player player,Player dead){
         if(!activeBountyPlayer.containsKey(player.getUniqueId()))
             return;
         final Bounty bounty = activeBountyPlayer.get(player.getUniqueId());
         bounty.addNewKill();
-        System.out.println(bounty.getCurrentKills());
-        //This means that the player has reached new kill requirement and the playerWill be rewarded
-        if(plugin.getConfiguration().getLevelMap().containsKey(bounty.getCurrentKills())){
-            bounty.setCurrentLevel(plugin.getConfiguration().getLevelMap().get(bounty.getCurrentKills()));
-            if(plugin.getConfiguration().getLevelUpMessages().containsKey(bounty.getCurrentLevel())){
-                MiniMessageUtils.broadcast(plugin.getConfiguration().getLevelUpMessages().get(bounty.getCurrentLevel())
-                        .replaceAll("%player%",bounty.getPlayer().getName())
-                        .replaceAll("%level%", String.valueOf(bounty.getCurrentLevel()))
-                        .replaceAll("%kills%", String.valueOf(bounty.getCurrentKills()))
-                );
-            }else {
-                MiniMessageUtils.broadcast(plugin.getConfiguration().getLevelupDefaultMessage()
-                        .replaceAll("%player%",bounty.getPlayer().getName())
-                        .replaceAll("%level%", String.valueOf(bounty.getCurrentLevel()))
-                );
-            }
-        }
+        plugin.getConfiguration().getExistingBountyMessage().forEach((m) -> {
+            MiniMessageUtils.broadcast(m
+                    .replaceAll("%kills%", String.valueOf(bounty.getCurrentKills()))
+                    .replaceAll("%killer%", player.getName())
+                    .replaceAll("%rand-loc%", LocationUtils.getRandomLocationFromARadius(player.getLocation(), 50))
+                    .replaceAll("%dead-player%", dead.getName()));
+        });
     }
 
     public void loadBountyFromExternalCache(@NotNull Player player){
@@ -109,4 +97,7 @@ public class DataManager {
         return this.activeBountyPlayer.values();
     }
 
+    public HashMap<UUID, Bounty> getActiveBountyPlayer() {
+        return activeBountyPlayer;
+    }
 }

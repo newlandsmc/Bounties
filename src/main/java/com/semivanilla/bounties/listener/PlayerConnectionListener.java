@@ -20,11 +20,13 @@ public class PlayerConnectionListener implements Listener {
         final Player player = event.getPlayer();
 
         if(plugin.getDataManager().isPlayerBounty(player)) {
+            System.out.println("Is in internal cache");
             return;
         }
 
         if(plugin.getCache().containsPlayer(player.getUniqueId())) {
             plugin.getDataManager().loadBountyFromExternalCache(player);
+            System.out.println("Loading from external cache");
         }
     }
 

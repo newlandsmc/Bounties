@@ -8,36 +8,14 @@
 
 ##Prefix of the plugin
 ##You can leave it blank if you don't wish to set one
-prefix: '<color:#0488D0>Bounty<color:#FAFAD2>On<color:#CBB7FF>Head <color:#EAE9E9>» '
+prefix: ''
 
 ##Duration of a bounty in sec. How long does a bounty stay on a player
 bounty-duration-in-sec: 86400
 
 #################################################################
-#levels are like the internal rank system for the plugin
-#levels.messages:
-#These messages are the messages that each player gets when one rank ups. If a rank for a message is not present. It will
-#force default message.
-#NOTE: Never ever delete levels.messages.default, It will be auto - regenerated even if you delete. If you don't want a
-#default message, you can set it blank
-#############
-#levels.kills
-##These settings define the level a player can achieve when he acquires a specific amount of levels
-##The level should match with in the rewards.level.level else the plugin will be disabled
-##An example for it would be
-##5:1 -> The player will be on first level once he reaches 5 kills and rewards will be based of rewards.level.1 on the
-##10:2 -> The player will be on first level once he reaches 10 kills and rewards will be based of rewards.level.2 on the
-##config below
-levels:
-  messages:
-    default: <color:#FF0000>%player% <color:#FFFFFF>has reached level <color:#46FF00>%level%
-    2: <color:#FF0000>%player% <color:#FFFFFF>is now on level <color:#46FF00>%level%. <color:#9610E8>
-      He is a true killer
-  kills:
-    3: 1
-    5: 2
-    7: 2
-#################################################################
+# Reward levels = number of kills needed
+
 #currently available options:
 # [XP]:amount -> Gives player definite amount of XP
 # [CONSOLE]:command -> Execute commands from console
@@ -50,22 +28,14 @@ levels:
 # %killer% -> Player who killed the bounty
 rewards:
   level:
-    0:
-      - '[XP]:500'
     1:
       - '[XP]:500'
-      - '[BROADCAST]:<green> %dead-bounty% has been killed by <blue> %killer%'
-      - '[CONSOLE]:give %killer% cooked_beef 5'
     2:
-      - '[XP]:500'
-      - '[BROADCAST]:<yellow> %dead-bounty% has been killed by <blue> %killer%'
-      - '[CONSOLE]:give %killer% gold_block 5'
-    10:
-      - '[XP]:2500'
-      - '[CONSOLE]:tps'
-      - '[MESSAGE]:<yellow>Woo: <gradient:green:blue>||||||||||||||||||||||||</gradient>!'
-      - '[MESSAGE]:&cHello'
-      - '[CONSOLE]:give %killer% bread 5'
+      - '[XP]:1000'
+    3:
+      - '[XP]:1500'
+    4:
+      - '[XP]:2000'
 
 #################################################################
 #Messages that are used in the game. Almost all the messages support multiple placeholders. The placeholders for each
@@ -79,8 +49,12 @@ messages:
   #%killer% -> Name of the killer
   #%%rand-loc%% -> A random location of radius 50 of the bounty player
   new-bounty-broadcast:
-    - <color:#E81010>%dead-player% <color:#FFFFFF>was slained by <color:#FFD800>%killer%
-    - <color:#E81010>%killer% <color:#00FFFB>has now a bounty on his head! He has been last spotted on somewhere near <color:#FF7C00>%rand-loc%
+    - <color:#E81010>%dead-player% was slained by %killer%
+    - <color:#E81010>%killer% now has a bounty on their head!
+  #Use this message instead of new-bounty-broadcast if killer already has a bounty
+  existing-bounty-broadcast:
+    - <color:#E81010>%dead-player% was slained by %killer%
+    - <color:#E81010>%killer%'s bounty grows...
   #Available Placeholders:
   #%player% -> Name of the dead player who has bounty
   #%player-x% -> X Location X of the dead bounty
@@ -90,5 +64,5 @@ messages:
   #%player_kills% -> The consecutive kills bounty had
   #%player_level% -> The current reward level the player had
   player-bounty-released-broadcast:
-    - <color:#FFD500>%killer% <color:#FFFFFF> has killed bounty <color:#F3FF00>%player% <color:#A2A2A1>[<color:#7E00FB>Level %player_level%<color:#A2A2A1>]
+    - <color:#BCBCBC>%player%'s bounty has been claimed by %player%
 version: 1.0

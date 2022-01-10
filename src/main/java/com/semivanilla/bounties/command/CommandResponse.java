@@ -9,7 +9,7 @@ public enum CommandResponse {
     CREATED_BOUNTY("§aBounty has been created!"),
     PLAYER_IS_EXEMPTED("§cThis player has been added to the exempted list, Remove the player from §6/bounty bypass player"),
     NO_BOUNTY_ON_PLAYER("§cThe player does not have a bounty on his head"),
-    ADDED_BOUNTY_ON_PLAYER("§aBounty has been added on player"),
+    REMOVED_BOUNTY("§aThe bounty has been removed from the player"),
     INVALID_ARGS("§cThe command is invalid/unrecognizable"),
     PLUGIN_RELOADED("§aReload complete")
     ;

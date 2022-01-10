@@ -3,6 +3,7 @@ package com.semivanilla.bounties.file;
 import com.semivanilla.bounties.Bounties;
 import com.semivanilla.bounties.model.RewardRank;
 import de.leonhard.storage.Config;
+import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +26,20 @@ public class Configuration {
     //Rewards
     private final HashMap<Integer, RewardRank> rewardMap = new HashMap<>();
 
-    private TreeSet<Integer> sortedRewardList;
+    //Placeholder Message
+    private String placeholderTagReplace;
+
+    //GUI
+    private String GUIName,previousName,nextName,namePlaceholder;
+    private int guiSize;
+    private List<String> lorePlaceholder;
+
+    private final HashMap<Integer,Integer> squareMapRadius = new HashMap<>();
+
+    private TreeSet<Integer> sortedRewardList,sortedMapRadius;
 
     //Messages
+    private int cooldownTicks;
     private List<String> newBountyBroadcast,bountyClear,existingBountyMessage;
     public Configuration(Bounties plugin) {
         this.plugin = plugin;
@@ -46,6 +58,21 @@ public class Configuration {
         });
         sortedRewardList = new TreeSet<>(rewardMap.keySet().stream().sorted().toList());
 
+        this.config.singleLayerKeySet("square-map-radius").forEach((kills) -> {
+            squareMapRadius.put(Integer.parseInt(kills),config.getInt("square-map-radius."+kills));
+        });
+        sortedMapRadius = new TreeSet<>(squareMapRadius.keySet().stream().sorted().toList());
+
+        this.placeholderTagReplace = ChatColor.translateAlternateColorCodes('&',config.getString("placeholder-tag-message"));
+
+        this.GUIName = config.getString("gui.name");
+        this.guiSize = config.getInt("gui.rows");
+        this.previousName = config.getString("gui.previous");
+        this.nextName = config.getString("gui.next");
+        this.namePlaceholder = config.getString("gui.name-player-placeholder");
+        this.lorePlaceholder = config.getStringList("gui.lore-placeholder");
+
+        this.cooldownTicks = config.getInt("interval-during-each-message-in-ticks");
         this.newBountyBroadcast = config.getStringList("messages.new-bounty-broadcast");
         this.bountyClear = config.getStringList("messages.player-bounty-released-broadcast");
         this.existingBountyMessage = config.getStringList("messages.existing-bounty-broadcast");
@@ -79,5 +106,51 @@ public class Configuration {
 
     public TreeSet<Integer> getSortedRewardList() {
         return sortedRewardList;
+    }
+
+    public String getPlaceholderTagReplace() {
+        return placeholderTagReplace;
+    }
+
+    public String getGUIName() {
+        return GUIName;
+    }
+
+    public String getPreviousName() {
+        return previousName;
+    }
+
+    public String getNextName() {
+        return nextName;
+    }
+
+    public int getGuiSize() {
+        return guiSize;
+    }
+
+    public String getNamePlaceholder() {
+        return namePlaceholder;
+    }
+
+    public List<String> getLorePlaceholder(int kills, String timeLeft) {
+        final ArrayList<String> strings = new ArrayList<>();
+        lorePlaceholder.forEach((s) -> {
+            strings.add(s.replace("%kills%",String.valueOf(kills))
+                    .replace("%timeleft%",timeLeft)
+            );
+        });
+        return strings;
+    }
+
+    public int getCooldownTicks() {
+        return cooldownTicks;
+    }
+
+    public int getSquareMapRadiusFor(int kills){
+        try {
+            return this.squareMapRadius.get(sortedMapRadius.lower(kills));
+        }catch (Exception e){
+            return this.squareMapRadius.get(sortedMapRadius.first());
+        }
     }
 }

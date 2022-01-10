@@ -34,7 +34,6 @@ public final class Bounties extends JavaPlugin {
         cache = new JsonCache(this);
         dataManager = new DataManager(this);
         commandHandler = new CommandHandler(this);
-        menu = new BountyMenu(this);
         dataStorage = new LocalDataStorage(this);
 
         if(!configuration.initConfig()){
@@ -45,6 +44,9 @@ public final class Bounties extends JavaPlugin {
         //Loads the configuration and sets the prefix immediately
         configuration.loadConfigData();
         utilsManager.getMessageUtils().setPrefix(configuration.getPluginPrefix());
+
+        //Intialize it as the configuration needed to be loaded for proper value call
+        menu = new BountyMenu(this);
 
         //Configuration should be loaded first even before loading cache as in future if one need to set a storage type
         if(!cache.initCacheSystem()){

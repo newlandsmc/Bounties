@@ -44,7 +44,7 @@ public class PlaceholderManager extends PlaceholderExpansion {
 
         if(params.equalsIgnoreCase("tag")){
             if(javaPlugin.getDataManager().isPlayerBounty(player.getUniqueId()))
-                return "bounty";
+                return javaPlugin.getConfiguration().getPlaceholderTagReplace();
             else return "";
         }
 

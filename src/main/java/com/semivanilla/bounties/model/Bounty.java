@@ -62,7 +62,7 @@ public class Bounty {
     }
 
     public Bounty markPlayerAsBounty(){
-        player.setMetadata(META_VALUE, new FixedMetadataValue(Bounties.getPlugin(), this.currentKills));
+        updateMetaDataFor(Bounties.getPlugin().getConfiguration().getSquareMapRadiusFor(this.currentKills));
         return this;
     }
 
@@ -76,7 +76,11 @@ public class Bounty {
 
     public void addNewKill(){
         this.currentKills++;
-        player.setMetadata(META_VALUE, new FixedMetadataValue(Bounties.getPlugin(), this.currentKills));
+        updateMetaDataFor(Bounties.getPlugin().getConfiguration().getSquareMapRadiusFor(this.currentKills));
+    }
+
+    public void updateMetaDataFor(int value){
+        player.setMetadata(META_VALUE, new FixedMetadataValue(Bounties.getPlugin(), value));
     }
 
     public Map<String, Object> serializeForJsonCache(){
@@ -86,6 +90,9 @@ public class Bounty {
         return stringObjectHashMap;
     }
 
+    public void setCurrentKills(int currentKills) {
+        this.currentKills = currentKills;
+    }
 
     public static Bounty buildFrom(@NotNull Player player, FlatFileSection section){
         return new Bounty(player,section.getLong("remaining"),section.getInt("kills"));

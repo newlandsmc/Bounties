@@ -220,7 +220,7 @@ one can run `clean package` from the root folder to produce the jar
    
     This stores data about a bounty or specifically [Bounty](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/model/Bounty.java). It stores player with their **UUID, No. of Kills, Remaining time**.
 
-    This can be implemented by using the interface [DataImpl](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/data/cache/CacheImpl.java) located at *com.semivanilla.bounties.data.cache*
+    This can be implemented by using the interface [CacheImpl](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/data/cache/CacheImpl.java) located at *com.semivanilla.bounties.data.cache*
 
     This too have few methods
 

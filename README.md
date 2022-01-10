@@ -148,7 +148,7 @@ one can run `clean package` from the root folder to produce the jar
 
 * I have written this plugin with future upgradability in mind. Currently the plugin utilizes JSON for storing persitent datas. In any future if you would like to extend the plugin to SQL Storage or NoSQL or even H2, you can do it without too much work. There are 2 types of cache the plugin stores
 
-  1. How much bounty a player has killed. (Simillar to player data)
+  ### 1. How much bounty a player has killed. (Simillar to player data)
   
     This stores only 2 data's. The player UUID and how much bounties the player killed. In future if you wish to add more storage option, you can just implement the [DataImpl](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/data/DataImpl.java) interface located at  *com.semivanilla.bounties.data;*
 
@@ -216,7 +216,7 @@ one can run `clean package` from the root folder to produce the jar
       void stop();
     ```
 
-  2. The details about a Bounty (No. of kills he has, remaining time )
+  ### 2. The details about a Bounty (No. of kills he has, remaining time )
    
     This stores data about a bounty or specifically [Bounty](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/model/Bounty.java). It stores player with their **UUID, No. of Kills, Remaining time**.
 

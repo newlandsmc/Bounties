@@ -57,6 +57,16 @@ gui:
   lore-placeholder:
     - "<color:#00FFF0>Time left <color:#A9A7A2>» %timeleft%"
     - "<color:#00FFF0>Current Kills <color:#A9A7A2>» %kills%"
+
+##Amount of time in ticks wait before sending in each message.
+interval-during-each-message-in-ticks: 10
+
+##The radius of marker that comes up on the square map plugin.
+##NOTE FOR Devs: These values are passed along side the META_DATA `bounty`, so this value can be fetched from anywhere
+square-map-radius:
+  1: 400
+  2: 300
+  3: 200
 #################################################################
 #Messages that are used in the game. Almost all the messages support multiple placeholders. The placeholders for each
 #message has been documented above its key.

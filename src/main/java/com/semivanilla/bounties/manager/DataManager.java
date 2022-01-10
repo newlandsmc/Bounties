@@ -4,6 +4,7 @@ import com.semivanilla.bounties.Bounties;
 import com.semivanilla.bounties.model.Bounty;
 import com.semivanilla.bounties.utils.utility.LocationUtils;
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,13 +71,21 @@ public class DataManager {
             return;
         final Bounty bounty = activeBountyPlayer.get(player.getUniqueId());
         bounty.addNewKill();
-        plugin.getConfiguration().getExistingBountyMessage().forEach((m) -> {
-            MiniMessageUtils.broadcast(m
-                    .replaceAll("%kills%", String.valueOf(bounty.getCurrentKills()))
-                    .replaceAll("%killer%", player.getName())
-                    .replaceAll("%rand-loc%", LocationUtils.getRandomLocationFromARadius(player.getLocation(), 50))
-                    .replaceAll("%dead-player%", dead.getName()));
-        });
+
+
+        for(String s : plugin.getConfiguration().getExistingBountyMessage()){
+            Bukkit.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    MiniMessageUtils.broadcast(s
+                            .replace("%kills%", String.valueOf(bounty.getCurrentKills()))
+                            .replace("%killer%", player.getName())
+                            .replace("%rand_loc%", LocationUtils.getRandomLocationFromARadius(player.getLocation(), 50))
+                            .replace("%dead_player%", dead.getName()));
+                }
+            },plugin.getConfiguration().getCooldownTicks());
+
+        }
     }
 
     public void loadBountyFromExternalCache(@NotNull Player player){

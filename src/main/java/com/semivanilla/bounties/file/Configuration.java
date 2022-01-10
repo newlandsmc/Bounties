@@ -34,9 +34,12 @@ public class Configuration {
     private int guiSize;
     private List<String> lorePlaceholder;
 
-    private TreeSet<Integer> sortedRewardList;
+    private final HashMap<Integer,Integer> squareMapRadius = new HashMap<>();
+
+    private TreeSet<Integer> sortedRewardList,sortedMapRadius;
 
     //Messages
+    private int cooldownTicks;
     private List<String> newBountyBroadcast,bountyClear,existingBountyMessage;
     public Configuration(Bounties plugin) {
         this.plugin = plugin;
@@ -55,6 +58,11 @@ public class Configuration {
         });
         sortedRewardList = new TreeSet<>(rewardMap.keySet().stream().sorted().toList());
 
+        this.config.singleLayerKeySet("square-map-radius").forEach((kills) -> {
+            squareMapRadius.put(Integer.parseInt(kills),config.getInt("square-map-radius."+kills));
+        });
+        sortedMapRadius = new TreeSet<>(squareMapRadius.keySet().stream().sorted().toList());
+
         this.placeholderTagReplace = ChatColor.translateAlternateColorCodes('&',config.getString("placeholder-tag-message"));
 
         this.GUIName = config.getString("gui.name");
@@ -64,6 +72,7 @@ public class Configuration {
         this.namePlaceholder = config.getString("gui.name-player-placeholder");
         this.lorePlaceholder = config.getStringList("gui.lore-placeholder");
 
+        this.cooldownTicks = config.getInt("interval-during-each-message-in-ticks");
         this.newBountyBroadcast = config.getStringList("messages.new-bounty-broadcast");
         this.bountyClear = config.getStringList("messages.player-bounty-released-broadcast");
         this.existingBountyMessage = config.getStringList("messages.existing-bounty-broadcast");
@@ -131,5 +140,17 @@ public class Configuration {
             );
         });
         return strings;
+    }
+
+    public int getCooldownTicks() {
+        return cooldownTicks;
+    }
+
+    public int getSquareMapRadiusFor(int kills){
+        try {
+            return this.squareMapRadius.get(sortedMapRadius.lower(kills));
+        }catch (Exception e){
+            return this.squareMapRadius.get(sortedMapRadius.first());
+        }
     }
 }

@@ -58,16 +58,22 @@ public class PlayerDeathListener implements Listener {
             if(rank != null) {
                 rank.executeFor(killer, deadPlayer);
                 plugin.getDataManager().clearBountyForPlayer(deadPlayer.getUniqueId());
-                plugin.getConfiguration().getBountyClear().forEach((s) -> {
-                    MiniMessageUtils.broadcast(s
-                            .replace("%dead_player%", deadPlayer.getName())
+
+                for(String s : plugin.getConfiguration().getBountyClear()){
+                    plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            MiniMessageUtils.broadcast(s
+                                    .replace("%dead_player%", deadPlayer.getName())
                                     .replace("%killer%", killer.getName())
                                     .replace("%player_kills%", String.valueOf(bounty.getCurrentKills()))
                                     .replace("%player_x%", String.valueOf(deadPlayer.getLocation().getX()))
                                     .replace("%player_y%", String.valueOf(deadPlayer.getLocation().getY()))
                                     .replace("%player_z%", String.valueOf(deadPlayer.getLocation().getZ()))
                             );
-                });
+                        }
+                    },plugin.getConfiguration().getCooldownTicks());
+                }
             }
             deadPlayerWasBounty = true;
         }
@@ -80,12 +86,17 @@ public class PlayerDeathListener implements Listener {
             }
 
             plugin.getDataManager().createBountyForPlayer(killer);
-            plugin.getConfiguration().getNewBountyBroadcast().forEach((b) -> {
-                    MiniMessageUtils.broadcast(b
-                            .replace("%killer%", killer.getName())
-                            .replace("%rand_loc%", LocationUtils.getRandomLocationFromARadius(killer.getLocation(), 50))
-                            .replace("%dead_player%", deadPlayer.getName()));
-            });
+            for(String b : plugin.getConfiguration().getNewBountyBroadcast()){
+                plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        MiniMessageUtils.broadcast(b
+                                .replace("%killer%", killer.getName())
+                                .replace("%rand_loc%", LocationUtils.getRandomLocationFromARadius(killer.getLocation(), 50))
+                                .replace("%dead_player%", deadPlayer.getName()));
+                    }
+                },plugin.getConfiguration().getCooldownTicks());
+            }
         }
 
 

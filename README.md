@@ -296,7 +296,7 @@ This event gets triggered when a player gets a bounty and when his bounty gets r
     else return false;
   ```
 
-* The plugin uses caching as much as possible. All the configuration values are cached. The player data for a player is cached for around 30 sec even after the player disconnects. Its saved instantly, the plugin reserves a copy of the data in cache to reduce I/O operations for quick disconnects.
+* The plugin uses caching as much as possible. All the configuration values are cached. The player data for a player is cached for around 30 sec even after the player disconnects. Its saved instantly, the plugin reserves a copy of the data in cache to reduce I/O operations for quick reconnects.
 
 ## Show your support
 

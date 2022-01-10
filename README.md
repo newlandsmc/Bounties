@@ -288,7 +288,7 @@ This event gets triggered when a player gets a bounty and when his bounty gets r
   When his bounty gets removed
 
 * The plugin also utilizes Bukkits Meta-data. If a player is a bounty, he will have a Metadata of `bounty`.
-  The value for the meta-data has been actually written to favour [](https://github.com/SemiVanilla-MC/SquaremapPlayers/tree/bounty-hook). The value results the radius of the player. But still one can check if a player is bounty by 
+  The value for the meta-data has been actually written to favour [SquaremapPlayers](https://github.com/SemiVanilla-MC/SquaremapPlayers/tree/bounty-hook). The value results the radius of the player. But still one can check if a player is bounty by 
 
   ```JAVA
     if(player.hasMetadata("bounty"))

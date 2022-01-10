@@ -1,6 +1,8 @@
 package com.semivanilla.bounties.manager;
 
 import com.semivanilla.bounties.Bounties;
+import com.semivanilla.bounties.api.enums.BountyStatus;
+import com.semivanilla.bounties.api.events.BountyStatusChange;
 import com.semivanilla.bounties.model.Bounty;
 import com.semivanilla.bounties.utils.utility.LocationUtils;
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
@@ -41,6 +43,8 @@ public class DataManager {
         final Bounty bounty = new Bounty(killer,(System.currentTimeMillis()+duration)).markPlayerAsBounty();
         plugin.getCache().insertCache(bounty);
         activeBountyPlayer.put(killer.getUniqueId(),bounty);
+        final BountyStatusChange event = new BountyStatusChange(BountyStatus.PLAYER_BECAME_BOUNTY,killer);
+        plugin.getServer().getPluginManager().callEvent(event);
     }
 
     /**
@@ -52,10 +56,16 @@ public class DataManager {
         bounty.unmarkAsBounty();
         activeBountyPlayer.remove(player);
         plugin.getCache().removeCache(player);
+        final BountyStatusChange event = new BountyStatusChange(BountyStatus.PLAYER_NO_LONGER_BOUNTY,bounty.getPlayer());
+        plugin.getServer().getPluginManager().callEvent(event);
     }
 
     public Bounty getPlayerBounty(@NotNull UUID player){
         return activeBountyPlayer.get(player);
+    }
+
+    public void setKillOnBounty(@NotNull UUID uuid, int kills){
+        activeBountyPlayer.get(uuid).setCurrentKills(kills);
     }
 
     /**

@@ -74,6 +74,8 @@ public class BountyCommand extends CommandBase {
         }
 
         handler.getPlugin().getDataManager().clearBountyForPlayer(player.getUniqueId());
+        MiniMessageUtils.sendMessage(sender,CommandResponse.REMOVED_BOUNTY.getMessage());
+
     }
 
     @SubCommand("bypass")
@@ -120,7 +122,12 @@ public class BountyCommand extends CommandBase {
             MiniMessageUtils.sendMessage(sender,CommandResponse.INVALID_ARGS.getMessage());
         }
 
-        handler.getPlugin().getDataManager().setBountyKills(player.getUniqueId(),kills);
+        if(!handler.getPlugin().getDataManager().isPlayerBounty(player)){
+            MiniMessageUtils.sendMessage(sender,CommandResponse.NO_BOUNTY_ON_PLAYER.getMessage());
+            return;
+        }
+
+        handler.getPlugin().getDataManager().setKillOnBounty(player.getUniqueId(),kills);
         MiniMessageUtils.sendMessage(sender,CommandResponse.SET_PLAYER_BOUNTY_KILLS.getMessage().replaceAll("%player%",player.getName()).replaceAll("%kills%", String.valueOf(kills)));
     }
 }

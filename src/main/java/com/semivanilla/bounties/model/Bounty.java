@@ -90,6 +90,9 @@ public class Bounty {
         return stringObjectHashMap;
     }
 
+    public void setCurrentKills(int currentKills) {
+        this.currentKills = currentKills;
+    }
 
     public static Bounty buildFrom(@NotNull Player player, FlatFileSection section){
         return new Bounty(player,section.getLong("remaining"),section.getInt("kills"));

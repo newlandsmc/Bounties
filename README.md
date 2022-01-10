@@ -20,7 +20,7 @@
 All the commands the plugin feature is marked down below with their permission
 
 |Command   |Description   |Permission   |
-|--:|--:|--:|
+|---|---|---|
 |/bounty add name   |Adds bounty to the specified player   |bounty.command.add   |
 |/bounty add name mins   |Adds bounty to the specified player for the specified time   |bounty.command.add   |
 |/bounty remove name  |Removes bounty from a player if it exists   |bounty.command.remove   |
@@ -35,7 +35,7 @@ All the commands the plugin feature is marked down below with their permission
 Some other permissions the plugin have
 
 |Permission   |What for?   |
-|--:|--:|
+|---|---|
 |bounty.admin   |This permission adds the ability to teleport to a player using GUI   |
 |bounty.bypass   |This permission bypass from creating bounties or rewarding bouties. If the killer or killed have this permission that will not be counted and skipped   |
 

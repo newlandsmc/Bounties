@@ -1,9 +1,9 @@
 package com.semivanilla.bounties.command;
 
 import com.semivanilla.bounties.Bounties;
+import com.semivanilla.bounties.command.commands.BountyCommand;
 import com.semivanilla.bounties.model.Bounty;
 import me.mattstudios.mf.base.CommandManager;
-import org.bukkit.Bukkit;
 
 import java.util.stream.Collectors;
 
@@ -20,7 +20,8 @@ public class CommandHandler {
     public void registerCommands(){
         registerOthers();
         manager.register(
-                new BountyCommand(this)
+                new BountyCommand(this),
+                new com.semivanilla.bounties.command.commands.Bounties(this)
         );
     }
 

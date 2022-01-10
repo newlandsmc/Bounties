@@ -38,6 +38,8 @@ public class DataManager {
         final Bounty bounty = new Bounty(killer,(System.currentTimeMillis()+plugin.getConfiguration().durationInMillis())).markPlayerAsBounty();
         plugin.getCache().insertCache(bounty);
         activeBountyPlayer.put(killer.getUniqueId(),bounty);
+        final BountyStatusChange event = new BountyStatusChange(BountyStatus.PLAYER_BECAME_BOUNTY,killer);
+        plugin.getServer().getPluginManager().callEvent(event);
     }
     public void createBountyForPlayer(Player killer,long duration){
         final Bounty bounty = new Bounty(killer,(System.currentTimeMillis()+duration)).markPlayerAsBounty();

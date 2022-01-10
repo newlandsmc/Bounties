@@ -24,7 +24,7 @@ public class BountyStatusChange extends Event {
     @NotNull
     @Override
     public HandlerList getHandlers() {
-        return null;
+        return HANDLERS_LIST;
     }
 
     public BountyStatus getStatus() {

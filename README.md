@@ -278,7 +278,7 @@ one can run `clean package` from the root folder to produce the jar
       void stop();
     ```
 
-* The plugin does not yet have an major API. But it does have an event. `BountyStatusChange`. 
+* The plugin does not yet have a major API. But it does have an event. `BountyStatusChange`. 
 This event gets triggered when a player gets a bounty and when his bounty gets removed. Its results in 2 status enums [BountyStatus ](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/api/enums/BountyStatus.java)
 
   #### 1. PLAYER_BECAME_BOUNTY

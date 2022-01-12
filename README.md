@@ -152,6 +152,13 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 * Any messages that is put blank won't be send. So if you don't need one, you can just put it as blank
 
+## Changelog
+
+| Version | Changelog |
+|---|---|
+| v1.1 | Added placeholder %bs_online% to show no of online bounty players. Re-allocated Adventure-API to plugin jar |
+| v1.0 | Stable Release |
+
 ## 🔧 Building
 
 The plugin is written on Java and uses Maven as its build configurator.

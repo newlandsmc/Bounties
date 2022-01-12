@@ -234,7 +234,7 @@ one can run `clean package` from the root folder to produce the jar
    
     This stores data about a bounty or specifically [Bounty](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/model/Bounty.java). It stores player with their **UUID, No. of Kills, Remaining time**.
 
-    This can be implemented by using the interface [DataImpl](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/data/cache/CacheImpl.java) located at *com.semivanilla.bounties.data.cache*
+    This can be implemented by using the interface [CacheImpl](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/data/cache/CacheImpl.java) located at *com.semivanilla.bounties.data.cache*
 
     This too have few methods
 
@@ -292,7 +292,7 @@ one can run `clean package` from the root folder to produce the jar
       void stop();
     ```
 
-* The plugin does not yet have an major API. But it does have an event. `BountyStatusChange`. 
+* The plugin does not yet have a major API. But it does have an event. `BountyStatusChange`. 
 This event gets triggered when a player gets a bounty and when his bounty gets removed. Its results in 2 status enums [BountyStatus ](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/java/com/semivanilla/bounties/api/enums/BountyStatus.java)
 
   #### 1. PLAYER_BECAME_BOUNTY
@@ -302,7 +302,7 @@ This event gets triggered when a player gets a bounty and when his bounty gets r
   When his bounty gets removed
 
 * The plugin also utilizes Bukkits Meta-data. If a player is a bounty, he will have a Metadata of `bounty`.
-  The value for the meta-data has been actually written to favour [](https://github.com/SemiVanilla-MC/SquaremapPlayers/tree/bounty-hook). The value results the radius of the player. But still one can check if a player is bounty by 
+  The value for the meta-data has been actually written to favour [SquaremapPlayers](https://github.com/SemiVanilla-MC/SquaremapPlayers/tree/bounty-hook). The value results the radius of the player. But still one can check if a player is bounty by 
 
   ```JAVA
     if(player.hasMetadata("bounty"))
@@ -310,7 +310,7 @@ This event gets triggered when a player gets a bounty and when his bounty gets r
     else return false;
   ```
 
-* The plugin uses caching as much as possible. All the configuration values are cached. The player data for a player is cached for around 30 sec even after the player disconnects. Its saved instantly, the plugin reserves a copy of the data in cache to reduce I/O operations for quick disconnects.
+* The plugin uses caching as much as possible. All the configuration values are cached. The player data for a player is cached for around 30 sec even after the player disconnects. Its saved instantly, the plugin reserves a copy of the data in cache to reduce I/O operations for quick reconnects.
 
 ## Show your support
 

@@ -83,6 +83,10 @@ public class PlaceholderManager extends PlaceholderExpansion {
             else return "0";
         }
 
+        if(params.equalsIgnoreCase("online")){
+            return String.valueOf(javaPlugin.getDataManager().getActiveBountyPlayer().size());
+        }
+
         return null;
     }
 

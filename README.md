@@ -39,6 +39,20 @@ Some other permissions the plugin have
 |bounty.admin   |This permission adds the ability to teleport to a player using GUI   |
 |bounty.bypass   |This permission bypass from creating bounties or rewarding bouties. If the killer or killed have this permission that will not be counted and skipped   |
 
+## Placeholders
+
+  The plugin has some placeholders available. This will be registered only if placeholderAPI is
+  enabled on server startup
+
+| Placeholder      | What it returns   ?                                                                   |
+|------------------|---------------------------------------------------------------------------------------|
+  | %bs_tag%         | Returns a text set in the config if the player bounty, else will return an empty text |
+ | %bs_kills%       | Returns the no of kills a player has if he is a bounty else 0                         |
+ | %bs_timeleft%    | Return how much time left on the bounty if he has a bounty else 0                     |
+| %bs_level%       | Returns the possible level that matches with the configured kills                     |
+| %bs_isbounty%    | Returns `true` if the player is bounty else `false`                                   |
+| %bs_bountykills% | Returns no of bounties that a player has killed in his entire playtime on the server  |
+| %bs_online%            | Returns the no of bounties online on the server                                       |
 ## Configurations
 
 ### This is not the config. It just explains what all are what. You can check out the config [here](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/resources/config.yml)

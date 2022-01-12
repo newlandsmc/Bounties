@@ -6,7 +6,7 @@
 
     <groupId>com.semivanilla</groupId>
     <artifactId>Bounties</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>BountyOnHead</name>
@@ -54,6 +54,10 @@
                                 <relocation>
                                     <pattern>dev.triumphteam.gui</pattern>
                                     <shadedPattern>com.semivanilla.bounties.shaded.gui</shadedPattern> <!-- Replace package here here -->
+                                </relocation>
+                                <relocation>
+                                    <pattern>net.kyori</pattern>
+                                    <shadedPattern>com.semivanilla.bounties.shaded.adventure</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

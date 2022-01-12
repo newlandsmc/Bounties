@@ -89,6 +89,13 @@ rewards:
 ##NOTE: PlaceholderAPI doesn't support MiniMessage, so use Legacy Color Codes
 placeholder-tag-message: " (bounty)"
 
+##The message that would be parsed when %bs_online_formatted% is used
+## zero-online: What would the plugin parse if there are no online bounties
+## online: The no of online players when the list is not empty in a formatted way
+placeholder-tag-bounty-online-formatted:
+  zero-online: What should be displayed if there is no bounty active on server
+  online: What should be displayed if there is bounty active on server
+
 ##Configuration for GUI's
 #name -> Name of the GUI
 #rows -> How many rows the plugin should have without the bottom navbar

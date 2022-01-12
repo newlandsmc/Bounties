@@ -53,6 +53,8 @@ Some other permissions the plugin have
 | %bs_isbounty%    | Returns `true` if the player is bounty else `false`                                   |
 | %bs_bountykills% | Returns no of bounties that a player has killed in his entire playtime on the server  |
 | %bs_online%            | Returns the no of bounties online on the server                                       |
+| %bs_online_formatted%            | Returns the configured string respecting the active bounty size                       |
+
 ## Configurations
 
 ### This is not the config. It just explains what all are what. You can check out the config [here](https://github.com/SemiVanilla-MC/Bounties/blob/master/src/main/resources/config.yml)
@@ -154,10 +156,11 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 ## Changelog
 
-| Version | Changelog |
-|---|---|
-| v1.1 | Added placeholder %bs_online% to show no of online bounty players. Re-allocated Adventure-API to plugin jar |
-| v1.0 | Stable Release |
+| Version | Changelog                                                                                                           |
+|---------|---------------------------------------------------------------------------------------------------------------------|
+| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list |
+| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar       |
+| v1.0    | Stable Release                                                                                                      |
 
 ## 🔧 Building
 

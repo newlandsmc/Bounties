@@ -28,6 +28,8 @@ public class Configuration {
 
     //Placeholder Message
     private String placeholderTagReplace;
+    private String placeholderNoOnline;
+    private String placeholderOnline;
 
     //GUI
     private String GUIName,previousName,nextName,namePlaceholder;
@@ -64,6 +66,8 @@ public class Configuration {
         sortedMapRadius = new TreeSet<>(squareMapRadius.keySet().stream().sorted().toList());
 
         this.placeholderTagReplace = ChatColor.translateAlternateColorCodes('&',config.getString("placeholder-tag-message"));
+        this.placeholderNoOnline = ChatColor.translateAlternateColorCodes('&',config.getString("placeholder-tag-bounty-online-formatted.zero-online"));
+        this.placeholderOnline = ChatColor.translateAlternateColorCodes('&',config.getString("placeholder-tag-bounty-online-formatted.online"));
 
         this.GUIName = config.getString("gui.name");
         this.guiSize = config.getInt("gui.rows");
@@ -152,5 +156,13 @@ public class Configuration {
         }catch (Exception e){
             return this.squareMapRadius.get(sortedMapRadius.first());
         }
+    }
+
+    public String getPlaceholderNoOnline() {
+        return placeholderNoOnline;
+    }
+
+    public String getPlaceholderOnline(int onlineCount) {
+        return placeholderOnline.replace("%online%",String.valueOf(onlineCount));
     }
 }

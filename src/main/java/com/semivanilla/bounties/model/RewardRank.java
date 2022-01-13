@@ -1,5 +1,6 @@
 package com.semivanilla.bounties.model;
 
+import com.google.common.base.Objects;
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -96,6 +97,27 @@ public class RewardRank {
 
     public List<String> getRewardsToProcess() {
         return rewardsToProcess;
+    }
+
+    @Override
+    public String toString() {
+        return "RewardRank{" +
+                "rankLevel=" + rankLevel +
+                ", rewardsToProcess=" + rewardsToProcess +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RewardRank that = (RewardRank) o;
+        return rankLevel == that.rankLevel && Objects.equal(rewardsToProcess, that.rewardsToProcess);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(rankLevel, rewardsToProcess);
     }
 }
 

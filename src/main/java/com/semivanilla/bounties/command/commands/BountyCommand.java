@@ -10,9 +10,10 @@ import me.mattstudios.mf.base.CommandBase;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-@Command("bounty")
+@Command("bounties")
 public class BountyCommand extends CommandBase {
 
     private final CommandHandler handler;
@@ -20,17 +21,27 @@ public class BountyCommand extends CommandBase {
     public BountyCommand(CommandHandler handler) {
         this.handler = handler;
     }
+    private final HashMap<String, String> commandHelp = new HashMap<>(){{
+        put("/bounty add player", "Adds a bounty to the player");
+        put("/bounty add player mins","Adds a bounty to the player for specified time");
+        put("/bounty remove player","Removes the bounty from player");
+        put("/bounty bypass player","Adds them to the bypass list. Once added, they won't be bounty-ed nor will release a bounty");
+        put("/bounty reload","Reloads the plugin. This will only reload the plugin configuration, not its cache");
+        put("/bounty set player kills","Sets the amount of kills a bounty have");
+    }};
 
     @Default
-    public void defaultCommand(final CommandSender sender){
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty add player <color:#A9A7A2>» <color:#FFFFFF>Adds a bounty to the player");
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty add player mins<color:#A9A7A2> » <color:#FFFFFF>Adds a bounty to the player for specified time");
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty remove player <color:#A9A7A2>» <color:#FFFFFF>Removes the bounty from player");
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty bypass player <color:#A9A7A2>» <color:#FFFFFF>Adds them to the bypass list. Once added, they won't be bounty-ed or will release a bounty");
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty reload <color:#A9A7A2>» <color:#FFFFFF>Reloads the plugin. This will only reload the plugin configuration, not its cache");
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty list <color:#A9A7A2>» <color:#FFFFFF>Opens a GUI of all active bounties");
-        MiniMessageUtils.sendMessage(sender,"<color:#FBC200>/bounty set player kills <color:#A9A7A2>» <color:#FFFFFF>Sets the amount of bounty kills a player have");
+    public void defaultCommand(final Player player){
+        handler.getPlugin().getMenu().openMenu(player);
+    }
 
+    @SubCommand("help")
+    public void onHelp(final CommandSender sender){
+        MiniMessageUtils.sendMessage(sender,handler.getPlugin().getConfiguration().getHelpHeader());
+        commandHelp.forEach((command,desc) -> {
+            MiniMessageUtils.sendMessage(sender,handler.getPlugin().getConfiguration().getHelpMessage(command,desc));
+        });
+        MiniMessageUtils.sendMessage(sender,handler.getPlugin().getConfiguration().getHelpFotter());
     }
 
     @SubCommand("add")
@@ -108,12 +119,6 @@ public class BountyCommand extends CommandBase {
     public void onReloadCommand(final CommandSender sender){
         handler.getPlugin().handleReload();
         MiniMessageUtils.sendMessage(sender,CommandResponse.PLUGIN_RELOADED.getMessage());
-    }
-
-    @SubCommand("list")
-    @Permission("bounty.command.list")
-    public void onList(final Player player){
-        handler.getPlugin().getMenu().openMenu(player);
     }
 
     @SubCommand("set")

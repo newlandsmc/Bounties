@@ -20,8 +20,7 @@ public class CommandHandler {
     public void registerCommands(){
         registerOthers();
         manager.register(
-                new BountyCommand(this),
-                new com.semivanilla.bounties.command.commands.Bounties(this)
+                new BountyCommand(this)
         );
     }
 

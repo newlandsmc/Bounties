@@ -67,7 +67,7 @@ public class MiniMessageUtils {
         if(StringUtils.isBlank(message))
             return Component.empty();
         final String legacyConversion = ChatColor.translateAlternateColorCodes('&',message);
-        return miniMessage.parse(message);
+        return miniMessage.deserialize(message);
     }
 
     public static List<Component> transform(@NotNull List<String> messages){

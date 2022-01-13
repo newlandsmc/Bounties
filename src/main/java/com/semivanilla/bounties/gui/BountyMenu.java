@@ -27,15 +27,15 @@ public class BountyMenu {
                 .disableAllInteractions()
                 .create();
 
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 1,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,2,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 1,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,2,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
         paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 3, ItemBuilder.from(Material.HOPPER).name(MiniMessageUtils.transform(plugin.getConfiguration().getPreviousName())).asGuiItem(event -> paginatedGui.previous()));
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,4,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,5,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,6,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,4,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,5,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,6,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
         paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1, 7, ItemBuilder.from(Material.HOPPER).name(MiniMessageUtils.transform(plugin.getConfiguration().getNextName())).asGuiItem(event -> paginatedGui.next()));
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,8,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
-        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,9,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,8,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
+        paginatedGui.setItem(plugin.getConfiguration().getGuiSize()+1,9,ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(Component.empty()).asGuiItem());
     }
 
     public void openMenu(Player player){

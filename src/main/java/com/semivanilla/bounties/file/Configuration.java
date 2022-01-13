@@ -4,6 +4,7 @@ import com.semivanilla.bounties.Bounties;
 import com.semivanilla.bounties.model.RewardRank;
 import de.leonhard.storage.Config;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class Configuration {
 
     private final Bounties plugin;
-    private Config config;
+    private FileConfiguration config;
 
     //Plugin Prefix
     private String pluginPrefix;
@@ -42,25 +43,28 @@ public class Configuration {
 
     //Messages
     private int cooldownTicks;
+    private List<String> helpHeader,helpFotter;
+    private String helpMessage;
     private List<String> newBountyBroadcast,bountyClear,existingBountyMessage;
     public Configuration(Bounties plugin) {
         this.plugin = plugin;
     }
 
     public boolean initConfig(){
-        config = plugin.getUtilsManager().getFileUtility().createConfiguration();
+        plugin.saveDefaultConfig();
+        config = plugin.getConfig();
         return config != null;
     }
 
     public void loadConfigData(){
         this.pluginPrefix = config.getString("prefix");
         this.bountyDuration = config.getInt("bounty-duration-in-sec");
-        this.config.singleLayerKeySet("rewards.level").forEach((kills) -> {
+        this.config.getConfigurationSection("rewards.level").getKeys(false).forEach((kills) -> {
             rewardMap.put(Integer.parseInt(kills), new RewardRank(Integer.parseInt(kills), config.getStringList("rewards.level."+kills)));
         });
         sortedRewardList = new TreeSet<>(rewardMap.keySet().stream().sorted().toList());
 
-        this.config.singleLayerKeySet("square-map-radius").forEach((kills) -> {
+        this.config.getConfigurationSection("square-map-radius").getKeys(false).forEach((kills) -> {
             squareMapRadius.put(Integer.parseInt(kills),config.getInt("square-map-radius."+kills));
         });
         sortedMapRadius = new TreeSet<>(squareMapRadius.keySet().stream().sorted().toList());
@@ -80,6 +84,9 @@ public class Configuration {
         this.newBountyBroadcast = config.getStringList("messages.new-bounty-broadcast");
         this.bountyClear = config.getStringList("messages.player-bounty-released-broadcast");
         this.existingBountyMessage = config.getStringList("messages.existing-bounty-broadcast");
+        this.helpHeader = config.getStringList("messages.help-message.header");
+        this.helpFotter = config.getStringList("messages.help-message.fotter");
+        this.helpMessage = config.getString("messages.help-message.comand-description");
     }
 
 
@@ -151,6 +158,7 @@ public class Configuration {
     }
 
     public int getSquareMapRadiusFor(int kills){
+
         try {
             return this.squareMapRadius.get(sortedMapRadius.lower(kills));
         }catch (Exception e){
@@ -164,5 +172,17 @@ public class Configuration {
 
     public String getPlaceholderOnline(int onlineCount) {
         return placeholderOnline.replace("%online%",String.valueOf(onlineCount));
+    }
+
+    public List<String> getHelpHeader() {
+        return helpHeader;
+    }
+
+    public List<String> getHelpFotter() {
+        return helpFotter;
+    }
+
+    public String getHelpMessage(String command, String description) {
+        return helpMessage.replace("%command%",command).replace("%description%",description);
     }
 }

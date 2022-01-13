@@ -19,16 +19,15 @@
 
 All the commands the plugin feature is marked down below with their permission
 
-|Command   |Description   |Permission   |
-|---|---|---|
-|/bounty add name   |Adds bounty to the specified player   |bounty.command.add   |
-|/bounty add name mins   |Adds bounty to the specified player for the specified time   |bounty.command.add   |
-|/bounty remove name  |Removes bounty from a player if it exists   |bounty.command.remove   |
-|/bounty bypass name   |Adds a temporary bypass to the player. This is not persistent, will be lost once the server restarts   |bounty.command.bypass   |
-|/bounty reload  |Reloads the configuration of the plugin   |bounty.command.reload   |
-|/bounty list   |Opens a GUI with active bounties   |bounty.command.list   |
-|/bounties   |Opens a GUI with active bounties   |bounty.command.list   |
-|/bounties set name kills |Set the kills for a bounty to the specified value |bounty.command.set|
+| Command                  |Description   |Permission   |
+|--------------------------|---|---|
+| /bounties                |Opens a GUI with active bounties   |   |
+| /bounties add name       |Adds bounty to the specified player   |bounty.command.add   |
+| /bounties add name mins  |Adds bounty to the specified player for the specified time   |bounty.command.add   |
+| /bounties remove name    |Removes bounty from a player if it exists   |bounty.command.remove   |
+| /bounties bypass name    |Adds a temporary bypass to the player. This is not persistent, will be lost once the server restarts   |bounty.command.bypass   |
+| /bounties reload         |Reloads the configuration of the plugin   |bounty.command.reload   |
+| /bounties set name kills |Set the kills for a bounty to the specified value |bounty.command.set|
 
 ## Permissions
 
@@ -163,11 +162,13 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 ## Changelog
 
-| Version | Changelog                                                                                                           |
-|---------|---------------------------------------------------------------------------------------------------------------------|
-| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list |
-| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar       |
-| v1.0    | Stable Release                                                                                                      |
+| Version | Changelog                                                                                                                     |
+|---------|-------------------------------------------------------------------------------------------------------------------------------|
+| v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties` |
+ | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                |
+| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list           |
+| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                 |
+| v1.0    | Stable Release                                                                                                                |
 
 ## 🔧 Building
 

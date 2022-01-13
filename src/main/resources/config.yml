@@ -82,6 +82,12 @@ square-map-radius:
 #All the messages down here support PlaceholderAPI Support...The placeholders are parsed for the player to whom the
 #message has been sent. Not the killer or Dead Player. This is done to make consistency in the plugin messaging
 messages:
+  help-message:
+    header:
+    - "<yellow><strikethrough>                         <reset> Bounty Help <yellow><strikethrough>                         <reset>"
+    comand-description: "<gold>%command%<white>: %description%"
+    fotter:
+    - "<yellow><strikethrough>                                                                  <reset>"
   #Available Placeholders:
   #%dead_player% -> Name of the dead player
   #%killer% -> Name of the killer

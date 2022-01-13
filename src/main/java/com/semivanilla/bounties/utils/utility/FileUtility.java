@@ -32,20 +32,6 @@ public class FileUtility {
         return this;
     }
 
-    public Config createConfiguration(){
-        generateParentFolder();
-        File configFile = new File(manager.getJavaPlugin().getDataFolder(), "config.yml");
-        Config config = LightningBuilder
-                .fromFile(configFile)
-                .addInputStream(this.getResourceAsStream("config.yml"))
-                .setDataType(DataType.SORTED)
-                .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
-                .setReloadSettings(ReloadSettings.MANUALLY)
-                .createConfig();
-        config.set("version",manager.getJavaPlugin().getDescription().getVersion());
-        return config;
-    }
-
     public Json createJson(@NotNull String fileName){
         return new Json(fileName,manager.getJavaPlugin().getDataFolder().getPath()+ File.separator+"data-storage");
     }

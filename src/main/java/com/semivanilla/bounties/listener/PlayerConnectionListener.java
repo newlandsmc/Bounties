@@ -42,7 +42,7 @@ public class PlayerConnectionListener implements Listener {
                     plugin.getDataManager().unloadFromCache(player.getUniqueId());
                     plugin.getDataManager().unloadBountyKillsFor(player.getUniqueId());
                 }
-            },20*30); //A small cache measure for some quick player reconnects
+            }, 20L *plugin.getConfiguration().getCacheSec()); //A small cache measure for some quick player reconnects
         }
     }
 

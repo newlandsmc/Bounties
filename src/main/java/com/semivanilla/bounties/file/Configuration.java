@@ -23,6 +23,7 @@ public class Configuration {
 
     //Bounty duration
     private long bountyDuration;
+    private int cacheSec;
 
     //Rewards
     private final HashMap<Integer, RewardRank> rewardMap = new HashMap<>();
@@ -59,6 +60,8 @@ public class Configuration {
     public void loadConfigData(){
         this.pluginPrefix = config.getString("prefix");
         this.bountyDuration = config.getInt("bounty-duration-in-sec");
+        this.cacheSec = config.getInt("cache-player-data-after-the-leave-in-sec");
+
         this.config.getConfigurationSection("rewards.level").getKeys(false).forEach((kills) -> {
             rewardMap.put(Integer.parseInt(kills), new RewardRank(Integer.parseInt(kills), config.getStringList("rewards.level."+kills)));
         });
@@ -184,5 +187,9 @@ public class Configuration {
 
     public String getHelpMessage(String command, String description) {
         return helpMessage.replace("%command%",command).replace("%description%",description);
+    }
+
+    public int getCacheSec() {
+        return cacheSec;
     }
 }

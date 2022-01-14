@@ -115,6 +115,10 @@ gui:
 ##Amount of time in ticks wait before sending in each message.
 interval-during-each-message-in-ticks: How many ticks should the plugin wait before sending a message from its previous one.
 
+##Secs in which the player data should be cached after they leave, 
+##This cache helps to reduce I/O writes if there are too much players
+##A good value should be somewhere between 15-30 sec
+cache-player-data-after-the-leave-in-sec: 3
 ##The radius of marker that comes up on the square map plugin.
 ##NOTE FOR Devs: These values are passed along side the META_DATA `bounty`, so this value can be fetched from anywhere
 square-map-radius:
@@ -162,13 +166,14 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 ## Changelog
 
-| Version | Changelog                                                                                                                     |
-|---------|-------------------------------------------------------------------------------------------------------------------------------|
+| Version | Changelog                                                                                                                      |
+|---------|--------------------------------------------------------------------------------------------------------------------------------|
+| v.1.5   | Added the time for cache as a configurable option `cache-player-data-after-the-leave-in-sec` to config.yml                     |
 | v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties` |
- | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                |
-| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list           |
-| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                 |
-| v1.0    | Stable Release                                                                                                                |
+ | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                 |
+| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list            |
+| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                  |
+| v1.0    | Stable Release                                                                                                                 |
 
 ## 🔧 Building
 
@@ -328,7 +333,7 @@ This event gets triggered when a player gets a bounty and when his bounty gets r
     else return false;
   ```
 
-* The plugin uses caching as much as possible. All the configuration values are cached. The player data for a player is cached for around 30 sec even after the player disconnects. Its saved instantly, the plugin reserves a copy of the data in cache to reduce I/O operations for quick reconnects.
+* The plugin uses caching as much as possible. All the configuration values are cached. The player data for a player is cached for a configurable amount of time even after the player disconnects. Its saved instantly, the plugin reserves a copy of the data in cache to reduce I/O operations for quick reconnects.
 
 ## Show your support
 

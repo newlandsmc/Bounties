@@ -32,6 +32,7 @@ public class Configuration {
     private String placeholderTagReplace;
     private String placeholderNoOnline;
     private String placeholderOnline;
+    private int rewardToKillNonBounty;
 
     //GUI
     private String GUIName,previousName,nextName,namePlaceholder;
@@ -61,6 +62,7 @@ public class Configuration {
         this.pluginPrefix = config.getString("prefix");
         this.bountyDuration = config.getInt("bounty-duration-in-sec");
         this.cacheSec = config.getInt("cache-player-data-after-the-leave-in-sec");
+        this.rewardToKillNonBounty = config.getInt("xp-for-killing-non-bounty");
 
         this.config.getConfigurationSection("rewards.level").getKeys(false).forEach((kills) -> {
             rewardMap.put(Integer.parseInt(kills), new RewardRank(Integer.parseInt(kills), config.getStringList("rewards.level."+kills)));
@@ -191,5 +193,9 @@ public class Configuration {
 
     public int getCacheSec() {
         return cacheSec;
+    }
+
+    public int getRewardToKillNonBounty() {
+        return rewardToKillNonBounty;
     }
 }

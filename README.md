@@ -66,6 +66,8 @@ prefix: ''
 ##Duration of a bounty in sec. How long does a bounty stay on a player
 bounty-duration-in-sec: No of sec's a bounty should last in a secs
 
+##Amount of xp that one gets if killed a player without bounty
+xp-for-killing-non-bounty: 250
 #Reward levels = number of kills needed
 
 #currently available options:
@@ -168,6 +170,7 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 | Version | Changelog                                                                                                                      |
 |---------|--------------------------------------------------------------------------------------------------------------------------------|
+| v.1.6   | Added new config option `xp-for-killing-non-bounty` that rewards if a player is not a bounty                                   |
 | v.1.5   | Added the time for cache as a configurable option `cache-player-data-after-the-leave-in-sec` to config.yml                     |
 | v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties` |
  | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                 |

@@ -76,6 +76,8 @@ public class PlayerDeathListener implements Listener {
                 }
             }
             deadPlayerWasBounty = true;
+        }else {
+            killer.giveExp(plugin.getConfiguration().getRewardToKillNonBounty());
         }
 
         if(plugin.getDataManager().isPlayerBounty(killer.getUniqueId())){

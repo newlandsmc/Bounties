@@ -37,6 +37,9 @@ rewards:
     4:
       - '[XP]:2000'
 
+##Amount of xp that one gets if killed a player without bounty
+xp-for-killing-non-bounty: 250
+
 ##The message that would parse when %bs_tag% is used if the player is bounty
 ##NOTE: PlaceholderAPI doesn't support MiniMessage, so use Legacy Color Codes
 placeholder-tag-message: " (bounty)"

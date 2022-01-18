@@ -19,47 +19,51 @@ public class RewardRank {
         this.rewardsToProcess = rewardsToProcess;
     }
 
+    public RewardRank(List<String> rewardsToProcess) {
+        this.rankLevel = 0;
+        this.rewardsToProcess = rewardsToProcess;
+    }
 
     public int getRankLevel() {
         return rankLevel;
     }
 
-    public void executeFor(@NotNull Player player, @NotNull Player dead){
+    public void executeFor(@NotNull Player killer, @NotNull Player deadGuy){
         rewardsToProcess.forEach((reward) -> {
             final String[] rewardArgs = reward.split(":");
             if(rewardArgs.length > 1) {
                 switch (rewardArgs[0].toUpperCase()) {
                     case "[XP]":
-                        giveXP(player, Integer.parseInt(rewardArgs[1]));
+                        giveXP(killer, Integer.parseInt(rewardArgs[1]));
                         break;
                     case "[XPLVL]":
-                        giveXPLevel(player, Integer.parseInt(rewardArgs[1]));
+                        giveXPLevel(killer, Integer.parseInt(rewardArgs[1]));
                         break;
                     case "[MESSAGE]":
                         final String message = reward.substring(("[MESSAGE]:").length())
-                                .replaceAll("%dead-bounty%",player.getName())
-                                .replaceAll("%killer%",dead.getName())
+                                .replaceAll("%dead-bounty%",deadGuy.getName())
+                                .replaceAll("%killer%",killer.getName())
                                 ;
-                        sendMessage(player, message);
+                        sendMessage(killer, message);
                         break;
                     case "[CONSOLE]":
                         final String consoleCommand = reward.substring(("[CONSOLE]:").length())
-                                .replaceAll("%dead-bounty%",player.getName())
-                                .replaceAll("%killer%",dead.getName())
+                                .replaceAll("%dead-bounty%",deadGuy.getName())
+                                .replaceAll("%killer%",killer.getName())
                                 ;
                         executeCommand(consoleCommand);
                         break;
                     case "[PLAYER]":
                         final String command = reward.substring(("[PLAYER]:").length())
-                                .replaceAll("%dead-bounty%",player.getName())
-                                .replaceAll("%killer%",dead.getName())
+                                .replaceAll("%dead-bounty%",deadGuy.getName())
+                                .replaceAll("%killer%",killer.getName())
                                 ;
-                        executeCommand(player,command);
+                        executeCommand(killer,command);
                         break;
                     case "[BROADCAST]":
                         final String broadcastMessage = reward.substring(("[BROADCAST]:").length())
-                                .replaceAll("%dead-bounty%",player.getName())
-                                .replaceAll("%killer%",dead.getName())
+                                .replaceAll("%dead-bounty%",deadGuy.getName())
+                                .replaceAll("%killer%",killer.getName())
                                 ;
                         broadcastMessage(broadcastMessage);
                         break;
@@ -97,6 +101,10 @@ public class RewardRank {
 
     public List<String> getRewardsToProcess() {
         return rewardsToProcess;
+    }
+
+    public static RewardRank buildFrom(@NotNull List<String> strings){
+        return new RewardRank(strings);
     }
 
     @Override

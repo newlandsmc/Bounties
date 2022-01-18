@@ -38,7 +38,17 @@ rewards:
       - '[XP]:2000'
 
 ##Amount of xp that one gets if killed a player without bounty
-xp-for-killing-non-bounty: 250
+  # [XP]:amount -> Gives player definite amount of XP
+  # [CONSOLE]:command -> Execute commands from console
+  # [PLAYER]:command -> Execute command as a player
+  # [MESSAGE]:message -> Send a message to the player who killed the bounty
+  # [XPLVL]:amount -> Gives player the specified levels worth of XP
+  # [BROADCAST]:message -> Broadcast a message to the entire server
+  #Available Placeoholders For Command and Messages
+  # %dead-bounty% -> The player who is dead or the player who was the bounty
+  # %killer% -> Player who killed the bounty
+xp-for-killing-non-bounty:
+  - "[XP]:250"
 
 ##The message that would parse when %bs_tag% is used if the player is bounty
 ##NOTE: PlaceholderAPI doesn't support MiniMessage, so use Legacy Color Codes

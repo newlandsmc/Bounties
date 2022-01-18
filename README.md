@@ -67,7 +67,17 @@ prefix: ''
 bounty-duration-in-sec: No of sec's a bounty should last in a secs
 
 ##Amount of xp that one gets if killed a player without bounty
-xp-for-killing-non-bounty: 250
+# [XP]:amount -> Gives player definite amount of XP
+# [CONSOLE]:command -> Execute commands from console
+# [PLAYER]:command -> Execute command as a player
+# [MESSAGE]:message -> Send a message to the player who killed the bounty
+# [XPLVL]:amount -> Gives player the specified levels worth of XP
+# [BROADCAST]:message -> Broadcast a message to the entire server
+#Available Placeoholders For Command and Messages
+# %dead-bounty% -> The player who is dead or the player who was the bounty
+# %killer% -> Player who killed the bounty
+xp-for-killing-non-bounty:
+  - '[ACTION]:TRIGGER'
 #Reward levels = number of kills needed
 
 #currently available options:
@@ -83,7 +93,7 @@ xp-for-killing-non-bounty: 250
 rewards:
   level:
     kill-count:
-      - 'ACTION:TRIGGER'
+      - '[ACTION]:TRIGGER'
 
 
 ##The message that would parse when %bs_tag% is used if the player is bounty
@@ -168,15 +178,16 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 ## Changelog
 
-| Version | Changelog                                                                                                                      |
-|---------|--------------------------------------------------------------------------------------------------------------------------------|
-| v.1.6   | Added new config option `xp-for-killing-non-bounty` that rewards if a player is not a bounty                                   |
-| v.1.5   | Added the time for cache as a configurable option `cache-player-data-after-the-leave-in-sec` to config.yml                     |
-| v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties` |
- | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                 |
-| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list            |
-| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                  |
-| v1.0    | Stable Release                                                                                                                 |
+| Version | Changelog                                                                                                                                                                      |
+|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| v.1.7   | Fixed the internal placeholder bug where killer was parsed as deadguy and deadguy was parsed as killer. Made the kill non-player bounty as configurable as normal bounty kills |
+| v.1.6   | Added new config option `xp-for-killing-non-bounty` that rewards if a player is not a bounty                                                                                   |
+| v.1.5   | Added the time for cache as a configurable option `cache-player-data-after-the-leave-in-sec` to config.yml                                                                     |
+| v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties`                                                 |
+ | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                                                                 |
+| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list                                                            |
+| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                                                                  |
+| v1.0    | Stable Release                                                                                                                                                                 |
 
 ## 🔧 Building
 

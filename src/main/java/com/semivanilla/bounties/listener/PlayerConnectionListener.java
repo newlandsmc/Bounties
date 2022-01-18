@@ -40,6 +40,10 @@ public class PlayerConnectionListener implements Listener {
             plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
+                    final Player checkAfterSec = plugin.getServer().getPlayer(player.getUniqueId());
+                    if(checkAfterSec != null && checkAfterSec.isOnline())
+                        return;
+
                     plugin.getDataManager().unloadFromCache(player.getUniqueId());
                     plugin.getDataManager().unloadBountyKillsFor(player.getUniqueId());
                 }

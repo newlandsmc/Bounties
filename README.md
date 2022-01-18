@@ -178,16 +178,17 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 ## Changelog
 
-| Version | Changelog                                                                                                                                                                      |
-|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| v.1.7   | Fixed the internal placeholder bug where killer was parsed as deadguy and deadguy was parsed as killer. Made the kill non-player bounty as configurable as normal bounty kills |
-| v.1.6   | Added new config option `xp-for-killing-non-bounty` that rewards if a player is not a bounty                                                                                   |
-| v.1.5   | Added the time for cache as a configurable option `cache-player-data-after-the-leave-in-sec` to config.yml                                                                     |
-| v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties`                                                 |
- | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                                                                 |
-| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list                                                            |
-| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                                                                  |
-| v1.0    | Stable Release                                                                                                                                                                 |
+| Version | Changelog                                                                                                                                                                                                                                       |
+|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| v.1.7.1 | Fixed a possible bug where if a player left and rejoins before the caching period ends, his data will be still unloaded when the timer kicks in. Fixed by adding a check when the cache timer runs out, if the player is not null and is online |
+| v.1.7   | Fixed the internal placeholder bug where killer was parsed as deadguy and deadguy was parsed as killer. Made the kill non-player bounty as configurable as normal bounty kills                                                                  |
+| v.1.6   | Added new config option `xp-for-killing-non-bounty` that rewards if a player is not a bounty                                                                                                                                                    |
+| v.1.5   | Added the time for cache as a configurable option `cache-player-data-after-the-leave-in-sec` to config.yml                                                                                                                                      |
+| v1.4    | Removed command `/bounty` and changed everything to `/bounties`. Removed /`bounties list` and the GUI is mapped to `/bounties`                                                                                                                  |
+ | v1.3    | Added Command Bounties, Changed File System From Simplix-Storage to Bukkit's FileConfiguration                                                                                                                                                  |
+| v1.2    | Added placeholder `%bs_online_formatted%` to show the formatted value from the config respecting active bounty list                                                                                                                             |
+| v1.1    | Added placeholder `%bs_online%` to show no of online bounty players. Re-allocated Adventure-API to plugin jar                                                                                                                                   |
+| v1.0    | Stable Release                                                                                                                                                                                                                                  |
 
 ## 🔧 Building
 

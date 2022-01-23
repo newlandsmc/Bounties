@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class Bounty {
 
     private final Player player;
-    private final long time;
+    private long time;
     private static final String META_VALUE = "bounty";
     private int currentKills;
 
@@ -74,8 +74,9 @@ public class Bounty {
         return currentKills;
     }
 
-    public void addNewKill(){
+    public void addNewKill(long updatedTime){
         this.currentKills++;
+        this.time = updatedTime;
         updateMetaDataFor(Bounties.getPlugin().getConfiguration().getSquareMapRadiusFor(this.currentKills));
     }
 

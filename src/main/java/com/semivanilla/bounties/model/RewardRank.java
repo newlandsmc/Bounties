@@ -8,8 +8,26 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RewardRank {
+
+    private static final String XP_TAG = "[XP]";
+    private static final String XP_TAG_CONCAT = "[XP]:";
+    private static final String XP_LVL_TAG = "[XPLVL]";
+    private static final String XP_LVL_TAG_CONCAT = "[XPLVL]:";
+    private static final String MESSAGE_TAG = "[MESSAGE]";
+    private static final String MESSAGE_TAG_CONCAT = "[MESSAGE]:";
+    private static final String CONSOLE_TAG = "[CONSOLE]";
+    private static final String CONSOLE_TAG_CONCAT = "[CONSOLE]:";
+    private static final String PLAYER_TAG = "[PLAYER]";
+    private static final String PLAYER_TAG_CONCAT = "[PLAYER]:";
+    private static final String BROADCAST_TAG = "[BROADCAST]";
+    private static final String BROADCAST_TAG_CONCAT = "[BROADCAST]:";
+    private static final String FXP_TAG = "[FXP]";
+    private static final String FXP_TAG_CONCAT = "[FXP]:";
+
+    private static final String COMMAND_FXP = "sk xp add %s fighting %d";
 
     private final int rankLevel;
     private final List<String> rewardsToProcess;
@@ -33,40 +51,42 @@ public class RewardRank {
             final String[] rewardArgs = reward.split(":");
             if(rewardArgs.length > 1) {
                 switch (rewardArgs[0].toUpperCase()) {
-                    case "[XP]":
+                    case XP_TAG:
                         giveXP(killer, Integer.parseInt(rewardArgs[1]));
                         break;
-                    case "[XPLVL]":
+                    case XP_LVL_TAG:
                         giveXPLevel(killer, Integer.parseInt(rewardArgs[1]));
                         break;
-                    case "[MESSAGE]":
-                        final String message = reward.substring(("[MESSAGE]:").length())
+                    case MESSAGE_TAG:
+                        final String message = reward.substring((MESSAGE_TAG_CONCAT).length())
                                 .replaceAll("%dead-bounty%",deadGuy.getName())
                                 .replaceAll("%killer%",killer.getName())
                                 ;
                         sendMessage(killer, message);
                         break;
-                    case "[CONSOLE]":
-                        final String consoleCommand = reward.substring(("[CONSOLE]:").length())
+                    case CONSOLE_TAG:
+                        final String consoleCommand = reward.substring((CONSOLE_TAG_CONCAT).length())
                                 .replaceAll("%dead-bounty%",deadGuy.getName())
                                 .replaceAll("%killer%",killer.getName())
                                 ;
                         executeCommand(consoleCommand);
                         break;
-                    case "[PLAYER]":
-                        final String command = reward.substring(("[PLAYER]:").length())
+                    case PLAYER_TAG:
+                        final String command = reward.substring((PLAYER_TAG_CONCAT).length())
                                 .replaceAll("%dead-bounty%",deadGuy.getName())
                                 .replaceAll("%killer%",killer.getName())
                                 ;
                         executeCommand(killer,command);
                         break;
-                    case "[BROADCAST]":
-                        final String broadcastMessage = reward.substring(("[BROADCAST]:").length())
+                    case BROADCAST_TAG:
+                        final String broadcastMessage = reward.substring((BROADCAST_TAG_CONCAT).length())
                                 .replaceAll("%dead-bounty%",deadGuy.getName())
                                 .replaceAll("%killer%",killer.getName())
                                 ;
                         broadcastMessage(broadcastMessage);
                         break;
+                    case FXP_TAG:
+                        executeCommand(String.format(COMMAND_FXP,killer.getName(),Integer.parseInt(rewardArgs[1])));
                     default:
                 }
             }
@@ -101,6 +121,14 @@ public class RewardRank {
 
     public List<String> getRewardsToProcess() {
         return rewardsToProcess;
+    }
+
+    public Optional<String> getFXPIfPresent(){
+        Optional<String> FXPPresent = rewardsToProcess.stream().filter(s -> s.startsWith(FXP_TAG)).findFirst();
+        if(FXPPresent.isEmpty())
+            return Optional.empty();
+
+        return Optional.ofNullable((FXPPresent.get().substring(FXP_TAG_CONCAT.length())));
     }
 
     public static RewardRank buildFrom(@NotNull List<String> strings){

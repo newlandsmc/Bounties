@@ -6,10 +6,7 @@ import de.leonhard.storage.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -59,6 +56,9 @@ public class Configuration {
     }
 
     public void loadConfigData(){
+        this.rewardMap.clear();
+        this.squareMapRadius.clear();
+
         this.pluginPrefix = config.getString("prefix");
         this.bountyDuration = config.getInt("bounty-duration-in-sec");
         this.cacheSec = config.getInt("cache-player-data-after-the-leave-in-sec");
@@ -153,6 +153,7 @@ public class Configuration {
         lorePlaceholder.forEach((s) -> {
             strings.add(s.replace("%kills%",String.valueOf(kills))
                     .replace("%timeleft%",timeLeft)
+                    .replace("%fxp%",getFXPIfPresent(kills))
             );
         });
         return strings;
@@ -197,5 +198,20 @@ public class Configuration {
 
     public RewardRank getRewardToKillNonBounty() {
         return rewardToKillNonBounty;
+    }
+
+    private String getFXPIfPresent(int kills){
+        RewardRank rank = null;
+        if(rewardMap.containsKey(kills))
+            rank = rewardMap.get(kills);
+        else rank = plugin.getConfiguration().getRewardMap().get(getSortedRewardList().lower(kills));
+
+        if(rank == null)
+            return "";
+
+        Optional<String> xpString = rank.getFXPIfPresent();
+
+        return xpString.orElse("");
+
     }
 }

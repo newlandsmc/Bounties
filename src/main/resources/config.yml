@@ -14,6 +14,8 @@ prefix: ''
 bounty-duration-in-sec: 86400
 
 #################################################################
+
+
 # Reward levels = number of kills needed
 
 #currently available options:
@@ -23,19 +25,20 @@ bounty-duration-in-sec: 86400
 # [MESSAGE]:message -> Send a message to the player who killed the bounty
 # [XPLVL]:amount -> Gives player the specified levels worth of XP
 # [BROADCAST]:message -> Broadcast a message to the entire server
+# [FXP]:amount -> Runs the preconfigured command of "sk xp add %s fighting %d"
 #Available Placeoholders For Command and Messages
 # %dead-bounty% -> The player who is dead or the player who was the bounty
 # %killer% -> Player who killed the bounty
 rewards:
   level:
     1:
-      - '[XP]:500'
+      - '[FXP]:500'
     2:
-      - '[XP]:1000'
+      - '[FXP]:1000'
     3:
-      - '[XP]:1500'
+      - '[FXP]:1500'
     4:
-      - '[XP]:2000'
+      - '[FXP]:2000'
 
 ##Amount of xp that one gets if killed a player without bounty
   # [XP]:amount -> Gives player definite amount of XP
@@ -78,6 +81,7 @@ gui:
   lore-placeholder:
     - "<color:#00FFF0>Time left <color:#A9A7A2>» %timeleft%"
     - "<color:#00FFF0>Current Kills <color:#A9A7A2>» %kills%"
+    - "<color:#00FFF0>Worth of: <color:#A9A7A2>» %fxp%"
 
 ##Amount of time in ticks wait before sending in each message.
 interval-during-each-message-in-ticks: 10

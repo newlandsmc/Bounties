@@ -82,7 +82,7 @@ public class DataManager {
         if(!activeBountyPlayer.containsKey(player.getUniqueId()))
             return;
         final Bounty bounty = activeBountyPlayer.get(player.getUniqueId());
-        bounty.addNewKill();
+        bounty.addNewKill((System.currentTimeMillis()+plugin.getConfiguration().durationInMillis()));
 
 
         for(String s : plugin.getConfiguration().getExistingBountyMessage()){

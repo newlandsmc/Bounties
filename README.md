@@ -73,6 +73,7 @@ bounty-duration-in-sec: No of sec's a bounty should last in a secs
 # [MESSAGE]:message -> Send a message to the player who killed the bounty
 # [XPLVL]:amount -> Gives player the specified levels worth of XP
 # [BROADCAST]:message -> Broadcast a message to the entire server
+# [FXP]:amount -> Runs the preconfigured command of "sk xp add %s fighting %d"
 #Available Placeoholders For Command and Messages
 # %dead-bounty% -> The player who is dead or the player who was the bounty
 # %killer% -> Player who killed the bounty
@@ -180,6 +181,7 @@ The plugin uses Adventure API's *4.10.0-SNAPSHOT*, This version and possible new
 
 | Version | Changelog                                                                                                                                                                                                                                       |
 |---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| v1.8    | Made it like each kill will update the player remaining time. Added new Action `[FXP]` to give the player particular amount of FXP (Runs the command instead of hooking into the API)                                                           |
 | v.1.7.1 | Fixed a possible bug where if a player left and rejoins before the caching period ends, his data will be still unloaded when the timer kicks in. Fixed by adding a check when the cache timer runs out, if the player is not null and is online |
 | v.1.7   | Fixed the internal placeholder bug where killer was parsed as deadguy and deadguy was parsed as killer. Made the kill non-player bounty as configurable as normal bounty kills                                                                  |
 | v.1.6   | Added new config option `xp-for-killing-non-bounty` that rewards if a player is not a bounty                                                                                                                                                    |

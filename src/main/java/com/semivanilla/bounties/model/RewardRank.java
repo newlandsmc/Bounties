@@ -27,7 +27,8 @@ public class RewardRank {
     private static final String FXP_TAG = "[FXP]";
     private static final String FXP_TAG_CONCAT = "[FXP]:";
 
-    private static final String COMMAND_FXP = "sk xp add %s fighting %d";
+    private static final String COMMAND_FXP_ADD = "sk xp add %s fighting %d";
+    private static final String COMMAND_FXP_REMOVE = "sk xp remove %s fighting %d";
 
     private final int rankLevel;
     private final List<String> rewardsToProcess;
@@ -86,7 +87,8 @@ public class RewardRank {
                         broadcastMessage(broadcastMessage);
                         break;
                     case FXP_TAG:
-                        executeCommand(String.format(COMMAND_FXP,killer.getName(),Integer.parseInt(rewardArgs[1])));
+                        executeCommand(String.format(COMMAND_FXP_ADD,killer.getName(),Integer.parseInt(rewardArgs[1])));
+                        executeCommand(String.format(COMMAND_FXP_REMOVE,deadGuy.getName(),Integer.parseInt(rewardArgs[1])));
                     default:
                 }
             }

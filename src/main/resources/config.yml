@@ -81,7 +81,7 @@ gui:
   lore-placeholder:
     - "<color:#00FFF0>Time left <color:#A9A7A2>» %timeleft%"
     - "<color:#00FFF0>Current Kills <color:#A9A7A2>» %kills%"
-    - "<color:#00FFF0>Worth of: <color:#A9A7A2>» %fxp%"
+    - "<color:#00FFF0>Fighting XP: <color:#A9A7A2>» %fxp%"
 
 ##Amount of time in ticks wait before sending in each message.
 interval-during-each-message-in-ticks: 10

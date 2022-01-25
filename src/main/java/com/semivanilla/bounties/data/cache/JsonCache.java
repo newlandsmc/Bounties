@@ -57,12 +57,6 @@ public class JsonCache implements CacheImpl {
     }
 
     @Override
-    public Optional<Bounty> getBounty(@NotNull Player player){
-        final Bounty bounty = Bounty.buildFrom(player, new FlatFileSection(this.cache,player.getUniqueId().toString()));
-        return Optional.of(bounty);
-    }
-
-    @Override
     public void updateBounty(@NotNull Bounty bounty) {
         if(!containsCacheForPlayer(bounty.getPlayerUUID()))
             insertCache(bounty);

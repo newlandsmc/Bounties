@@ -109,6 +109,17 @@ public class DataManager {
         }else plugin.getLogger().info("A cache for player does not seems to exist in storage");
     }
 
+    public void loadTempBountyForPlayer(@NotNull Bounty bounty){
+            activeBountyPlayer.put(bounty.getPlayerUUID(),bounty);
+            plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    unloadFromCache(bounty.getPlayerUUID());
+                    plugin.getLogger().info("The cache for player was loaded temporarily for Anti-Combat Logging");
+                }
+            },20*10);
+    }
+
     public boolean isPlayerExemptedFromBounty(@NotNull String playerName){
        return exemptFromBounty.contains(playerName);
     }

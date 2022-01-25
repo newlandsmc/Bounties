@@ -2,6 +2,7 @@ package com.semivanilla.bounties.data.cache;
 
 import com.semivanilla.bounties.file.Configuration;
 import com.semivanilla.bounties.model.Bounty;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -53,6 +54,15 @@ public interface CacheImpl {
      * @see {@link Bounty}
      */
     Optional<Bounty> getBounty(@NotNull UUID uuid);
+
+    /**
+     * Returns an optional parameter which can be used to gen them from a player object
+     * NOTE: This is important as sometimes the anti-combat plugin triggers the event with NPC and the player object can
+     * only be passed from the event
+     * @param player
+     * @return
+     */
+    Optional<Bounty> getBounty(@NotNull Player player);
 
     /**
      * Updates the details of Bounty.

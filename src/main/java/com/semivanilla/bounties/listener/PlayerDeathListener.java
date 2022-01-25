@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PlayerDeathListener implements Listener {
@@ -23,8 +24,13 @@ public class PlayerDeathListener implements Listener {
     @EventHandler
     public void onPlayerDeathListener(PlayerDeathEvent event){
         final Player deadPlayer = event.getEntity();
+
+        //This is a combat logged situation
+        if(deadPlayer == null)
+            return;
+
         boolean deadPlayerWasBounty = false;
-        //Death can be of many reason, if there are no human player entity that killed a player.
+        //Death can be of many reason, if there is no human player entity that killed a player.
         //it will not be of PvP
         if(deadPlayer.getKiller() == null)
             return;
@@ -39,6 +45,7 @@ public class PlayerDeathListener implements Listener {
 
         if(killer.hasPermission("bounty.bypass") || deadPlayer.hasPermission("bounty.bypass"))
             return;
+        
 
         if(plugin.getDataManager().isPlayerBounty(deadPlayer)) {
             Bounty bounty = plugin.getDataManager().getPlayerBounty(deadPlayer.getUniqueId());
@@ -80,13 +87,15 @@ public class PlayerDeathListener implements Listener {
             (plugin.getConfiguration().getRewardToKillNonBounty()).executeFor(killer,deadPlayer);
         }
 
+        //If the dead player is bounty we don't need to bother about other adding a new kill or creating a new bounty on
+        //the killer's head
+        if(deadPlayerWasBounty) {
+            return;
+        }
+
         if(plugin.getDataManager().isPlayerBounty(killer.getUniqueId())){
             plugin.getDataManager().addNewKill(killer,deadPlayer);
         }else {
-            if(deadPlayerWasBounty) {
-                return;
-            }
-
             plugin.getDataManager().createBountyForPlayer(killer);
             for(String b : plugin.getConfiguration().getNewBountyBroadcast()){
                 plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
@@ -100,8 +109,5 @@ public class PlayerDeathListener implements Listener {
                 },plugin.getConfiguration().getCooldownTicks());
             }
         }
-
-
-
     }
 }

@@ -92,8 +92,8 @@ public class Configuration {
         this.helpHeader = config.getStringList("messages.help-message.header");
         this.helpFotter = config.getStringList("messages.help-message.fotter");
         this.helpMessage = config.getString("messages.help-message.comand-description");
-        this.alreadyKilledBeforeMessageAttacker = config.getStringList("already-killed-before.killer");
-        this.alreadyKilledBeforeMessageVictim = config.getStringList("already-killed-before.victim");
+        this.alreadyKilledBeforeMessageAttacker = config.getStringList("messages.already-killed-before.killer");
+        this.alreadyKilledBeforeMessageVictim = config.getStringList("messages.already-killed-before.victim");
     }
 
 

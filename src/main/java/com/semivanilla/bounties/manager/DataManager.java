@@ -4,6 +4,7 @@ import com.semivanilla.bounties.Bounties;
 import com.semivanilla.bounties.api.enums.BountyStatus;
 import com.semivanilla.bounties.api.events.BountyStatusChange;
 import com.semivanilla.bounties.model.Bounty;
+import com.semivanilla.bounties.utils.Pair;
 import com.semivanilla.bounties.utils.utility.LocationUtils;
 import com.semivanilla.bounties.utils.utility.MiniMessageUtils;
 import org.bukkit.Bukkit;
@@ -18,12 +19,24 @@ public class DataManager {
     private final HashMap<UUID, Bounty> activeBountyPlayer;
     private final List<String> exemptFromBounty;
     private final HashMap<UUID, Integer> playerBountyKills;
+    private final HashMap<UUID, Pair<Long,UUID>> alreadyKilled;
+
+    private static final long DUPLICATE_KILL_EXPIRE = 3600000L;
 
     public DataManager(Bounties plugin) {
         this.plugin = plugin;
         this.activeBountyPlayer = new HashMap<>();
         this.playerBountyKills = new HashMap<>();
-        this.exemptFromBounty = new ArrayList<String>();
+        this.exemptFromBounty = new ArrayList<>();
+        this.alreadyKilled = new HashMap<>();
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,() -> {
+            long now = System.currentTimeMillis();
+            alreadyKilled.forEach((uuid, pair) -> {
+                if (pair.getValue0() <= now){
+                    alreadyKilled.remove(uuid);
+                }
+            });
+        }, 20, (20 * 60)); //every minute
     }
 
     public boolean isPlayerBounty(@NotNull Player player){
@@ -32,6 +45,17 @@ public class DataManager {
 
     public boolean isPlayerBounty(@NotNull UUID uuid){
         return activeBountyPlayer.containsKey(uuid);
+    }
+
+    public boolean isDuplicateKill(Player killer, Player victim){
+        if (alreadyKilled.containsKey(killer.getUniqueId())){
+            return alreadyKilled.get(killer.getUniqueId()).getValue1().equals(victim.getUniqueId());
+        }
+        return false;
+    }
+
+    public void setLastKilled(UUID killer,UUID victim) {
+        alreadyKilled.put(killer, new Pair<>(System.currentTimeMillis() + DUPLICATE_KILL_EXPIRE, victim));
     }
 
     public void createBountyForPlayer(Player killer){

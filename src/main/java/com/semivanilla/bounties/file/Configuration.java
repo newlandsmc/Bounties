@@ -44,7 +44,7 @@ public class Configuration {
     private int cooldownTicks;
     private List<String> helpHeader,helpFotter;
     private String helpMessage;
-    private List<String> newBountyBroadcast,bountyClear,existingBountyMessage;
+    private List<String> newBountyBroadcast,bountyClear,existingBountyMessage, alreadyKilledBeforeMessageAttacker, alreadyKilledBeforeMessageVictim;
     public Configuration(Bounties plugin) {
         this.plugin = plugin;
     }
@@ -92,6 +92,8 @@ public class Configuration {
         this.helpHeader = config.getStringList("messages.help-message.header");
         this.helpFotter = config.getStringList("messages.help-message.fotter");
         this.helpMessage = config.getString("messages.help-message.comand-description");
+        this.alreadyKilledBeforeMessageAttacker = config.getStringList("already-killed-before.killer");
+        this.alreadyKilledBeforeMessageVictim = config.getStringList("already-killed-before.victim");
     }
 
 
@@ -213,5 +215,13 @@ public class Configuration {
 
         return xpString.orElse("");
 
+    }
+
+    public List<String> getAlreadyKilledBeforeMessageAttacker() { //should change these names - Badbird5907
+        return alreadyKilledBeforeMessageAttacker;
+    }
+
+    public List<String> getAlreadyKilledBeforeMessageVictim() {
+        return alreadyKilledBeforeMessageVictim;
     }
 }

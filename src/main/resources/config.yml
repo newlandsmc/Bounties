@@ -134,4 +134,10 @@ messages:
   #%player_level% -> The current reward level the player had
   player-bounty-released-broadcast:
     - "<gray>%dead_player%'s bounty has been claimed by %killer%"
+
+  already-killed-before:
+    killer:
+      - "<gray> * You killed %dead-player% again!"
+    victim:
+      - "<gray> * %bounty% killed you again!"
 version: 1.0

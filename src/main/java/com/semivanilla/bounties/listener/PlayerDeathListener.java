@@ -10,9 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 public class PlayerDeathListener implements Listener {
 
     private final Bounties plugin;
@@ -43,9 +40,18 @@ public class PlayerDeathListener implements Listener {
         if(plugin.getDataManager().isPlayerExemptedFromBounty(killer.getName()) || plugin.getDataManager().isPlayerExemptedFromBounty(deadPlayer.getName()))
             return;
 
+
+        if (plugin.getDataManager().isDuplicateKill(killer, deadPlayer)) {
+            MiniMessageUtils.sendMessage(killer,plugin.getConfiguration().getAlreadyKilledBeforeMessageAttacker());
+            MiniMessageUtils.sendMessage(deadPlayer,plugin.getConfiguration().getAlreadyKilledBeforeMessageVictim());
+            return;
+        }
+
+        plugin.getDataManager().setLastKilled(killer.getUniqueId(), deadPlayer.getUniqueId());
+
         if(killer.hasPermission("bounty.bypass") || deadPlayer.hasPermission("bounty.bypass"))
             return;
-        
+
 
         if(plugin.getDataManager().isPlayerBounty(deadPlayer)) {
             Bounty bounty = plugin.getDataManager().getPlayerBounty(deadPlayer.getUniqueId());

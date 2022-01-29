@@ -137,7 +137,7 @@ messages:
 
   already-killed-before:
     killer:
-      - "<gray> * You killed %dead-player% again!"
+      - "<gray> * You killed %dead_player% again!"
     victim:
       - "<gray> * %bounty% killed you again!"
 version: 1.0

@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.stream.Collectors;
+
 public class PlayerDeathListener implements Listener {
 
     private final Bounties plugin;
@@ -42,8 +44,8 @@ public class PlayerDeathListener implements Listener {
 
 
         if (plugin.getDataManager().isDuplicateKill(killer, deadPlayer)) {
-            MiniMessageUtils.sendMessage(killer,plugin.getConfiguration().getAlreadyKilledBeforeMessageAttacker());
-            MiniMessageUtils.sendMessage(deadPlayer,plugin.getConfiguration().getAlreadyKilledBeforeMessageVictim());
+            MiniMessageUtils.sendMessage(killer,plugin.getConfiguration().getAlreadyKilledBeforeMessageAttacker().stream().map(s -> s.replace("%dead_player%",deadPlayer.getName())).collect(Collectors.toList()));
+            MiniMessageUtils.sendMessage(deadPlayer,plugin.getConfiguration().getAlreadyKilledBeforeMessageVictim().stream().map(s -> s.replace("%bounty%",killer.getName())).collect(Collectors.toList()));
             return;
         }
 

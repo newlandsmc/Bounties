@@ -1,13 +1,5 @@
 
-
-<h1 align="center">Welcome to Bounties 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
-</p>
-
-> The plugin bounties is a custom made plugin tailored for the need of Semi-Vanilla MC.The plugin marks a player as bounty when a player kills another one.There will be rewards for players who kills the bounty. The rewards are based on kills. rewards for kills are defined in the config.
-
-##Bounties V2
+## Bounties V2
 
 Bounties v2 is a recoded version of [Bounties](https://github.com/SemiVanilla-MC/Bounties). This was a complete recode,
 that means the entire plugin is again coded from the scratch. 
@@ -21,6 +13,14 @@ The primary reason for the recode is because the orginal concept was a simple pl
     * Create an API and hook [SquareMapPlayer](https://github.com/SemiVanilla-MC/SquaremapPlayers) with it
     * Replace the complex reward system with a simpler system of FXP due to queuing and combat logging
     * Add a anti-spam functionality where basically if a player killed same player repeatedly, cancel everything related to bounty. (To Me: Keep a new player Death Listener, and create a new Cached Map  with specified time limit (60 sec).When a player killed a player, add them both if again killed the same guy, cancel the bounty rewards/kills, if the dead guy is different, continue the reward system, while adding the new dead guy to the map. Don't remove this even if the killer gets killed) 
+
+<h1 align="center">Welcome to Bounties 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+</p>
+
+> The plugin bounties is a custom made plugin tailored for the need of Semi-Vanilla MC.The plugin marks a player as bounty when a player kills another one.There will be rewards for players who kills the bounty. The rewards are based on kills. rewards for kills are defined in the config.
+
 
 ### 🏠 [Homepage](https://github.com/SemiVanilla-MC/Bounties)
 

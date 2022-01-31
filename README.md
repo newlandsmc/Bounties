@@ -1,4 +1,4 @@
-#Bounties V2
+##Bounties V2
 
 Bounties v2 is a recoded version of [Bounties](https://github.com/SemiVanilla-MC/Bounties). This was a complete recode,
 that means the entire plugin is again coded from the scratch. 
